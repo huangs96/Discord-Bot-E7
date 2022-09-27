@@ -21,8 +21,8 @@ const client = new Discord.Client({
 })
 
 let value = [];
-let discordValue = [];
-let chars = ['add budget 50', 'add budget 60'];
+let discordValue = {};
+let chars = ['gas 30 dollars', 'add budget 60'];
 // let dictionary = ['Adventurer Ras, Alencia, Apocalypse Ravi, Choux, Rimuru, Spirit Eye Celine, Archdemons Shadow, Belian, Rem, Remnant Violet, Maid Chloe, Hwayoung, Edward Elric, Arbiter Vildred, Cidd, Ran, Peira, Summertime Iseria, Kawerik, Mercedes, Closer Charles, Eda, Pavel, Landy, Lilias, Senya, Sylvian Sage Vivian, Conqueror Lilias, Celine, Fallen Cecilia, Violet, Holiday Yufine, Krau, Ruele of Light, Specter of Tenebria, Mort, Kise, Judge Kise, Operator Sigret, Kayron, Aria, Troublemaker Crozet, Ravi, Fairytale Tenebria'];
 
 app.get("/", async (req, res) => {
@@ -67,10 +67,11 @@ app.get("/", async (req, res) => {
   //send the data with the response
   let sheetsData = readData.data.values.values();
   for (let x of sheetsData) {
-    const stringdata = x.toString();
-    discordValue.push(stringdata);
-  }
-  console.log(discordValue);
+    discordValue.data1 = x[0];
+    discordValue.data2 = x[1];
+    discordValue.data3 = x[2];
+  };
+  console.log(discordValue.data1);
 
   res.send('submitted');
 })
@@ -81,10 +82,12 @@ client.on("ready", () => {
 })
 
 client.on('messageCreate', (message) => {
-  const embed = new EmbedBuilder().setTitle('Budget Information').setDescription('Information on Stephens budget').setTimestamp().setThumbnail('https://upload.wikimedia.org/wikipedia/commons/f/f9/Money_Cash.jpg').addFields(
-		{ name: 'Car', value: '$400', inline: true},
-		{ name: 'Girlfriend', value: '$20000', inline: true },
-		{ name: 'Mtg', value: '$3000', inline: true },
+  let stringedObj = JSON.stringify(discordValue);
+  console.log(discordValue.data1);
+  const embed = new EmbedBuilder().setTitle('Budget Information').setDescription('Stephens expensive budget for his girlfriend').setTimestamp().setThumbnail('https://upload.wikimedia.org/wikipedia/commons/f/f9/Money_Cash.jpg').addFields(
+		{ name: `${discordValue.data1}`, value: `${discordValue.data3}`, inline: true},
+		{ name: `${JSON.stringify(discordValue)}`, value: `${JSON.stringify(discordValue)}`, inline: true },
+		{ name: `${JSON.stringify(discordValue)}`, value: `${JSON.stringify(discordValue)}`, inline: true },
 	);
 
   for (let i=0;i<chars.length;i++) {
