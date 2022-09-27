@@ -22,7 +22,7 @@ const client = new Discord.Client({
 
 let value = [];
 let discordValue = {};
-let chars = ['gas 30 dollars', 'add budget 60'];
+let chars = ['gas 20 30', 'girlfriend 3000 3200'];
 // let dictionary = ['Adventurer Ras, Alencia, Apocalypse Ravi, Choux, Rimuru, Spirit Eye Celine, Archdemons Shadow, Belian, Rem, Remnant Violet, Maid Chloe, Hwayoung, Edward Elric, Arbiter Vildred, Cidd, Ran, Peira, Summertime Iseria, Kawerik, Mercedes, Closer Charles, Eda, Pavel, Landy, Lilias, Senya, Sylvian Sage Vivian, Conqueror Lilias, Celine, Fallen Cecilia, Violet, Holiday Yufine, Krau, Ruele of Light, Specter of Tenebria, Mort, Kise, Judge Kise, Operator Sigret, Kayron, Aria, Troublemaker Crozet, Ravi, Fairytale Tenebria'];
 
 app.get("/", async (req, res) => {
@@ -51,7 +51,7 @@ app.get("/", async (req, res) => {
   const getRows = await googleSheets.spreadsheets.values.append({
     auth,
     spreadsheetId,
-    range: "Sheet1!A:B",
+    range: "Sheet1!A1:B8",
     valueInputOption: "USER_ENTERED",
     resource: {
       values: value
@@ -71,7 +71,7 @@ app.get("/", async (req, res) => {
     discordValue.data2 = x[1];
     discordValue.data3 = x[2];
   };
-  console.log(discordValue.data1);
+  console.log('discordvalue---', discordValue);
 
   res.send('submitted');
 })
@@ -82,12 +82,10 @@ client.on("ready", () => {
 })
 
 client.on('messageCreate', (message) => {
-  let stringedObj = JSON.stringify(discordValue);
-  console.log(discordValue.data1);
-  const embed = new EmbedBuilder().setTitle('Budget Information').setDescription('Stephens expensive budget for his girlfriend').setTimestamp().setThumbnail('https://upload.wikimedia.org/wikipedia/commons/f/f9/Money_Cash.jpg').addFields(
-		{ name: `${discordValue.data1}`, value: `${discordValue.data3}`, inline: true},
-		{ name: `${JSON.stringify(discordValue)}`, value: `${JSON.stringify(discordValue)}`, inline: true },
-		{ name: `${JSON.stringify(discordValue)}`, value: `${JSON.stringify(discordValue)}`, inline: true },
+  const embed = new EmbedBuilder().setTitle('Budget Information').setDescription('Stephens expensive budget with pretax and total aftertax').setTimestamp().setThumbnail('https://upload.wikimedia.org/wikipedia/commons/f/f9/Money_Cash.jpg').addFields(
+		{ name: 'Expense', value: `${discordValue.data1}`, inline: true},
+		{ name: 'Pre-tax', value: `${discordValue.data2}`, inline: true },
+		{ name: 'Total', value: `${discordValue.data3}`, inline: true },
 	);
 
   for (let i=0;i<chars.length;i++) {
