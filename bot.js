@@ -48,7 +48,7 @@ app.get("/", async (req, res) => {
     spreadsheetId
   });
 
-  const getRows = await googleSheets.spreadsheets.values.append({
+  const getRows = googleSheets.spreadsheets.values.append({
     auth,
     spreadsheetId,
     range: "Sheet1!A1:B8",
@@ -67,6 +67,7 @@ app.get("/", async (req, res) => {
   //send the data with the response
   let sheetsData = readData.data.values.values();
   for (let x of sheetsData) {
+    console.log(x);
     discordValue.data1 = x[0];
     discordValue.data2 = x[1];
     discordValue.data3 = x[2];
@@ -81,20 +82,26 @@ client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
 
-client.on('messageCreate', (message) => {
-  const embed = new EmbedBuilder().setTitle('Budget Information').setDescription('Stephens expensive budget with pretax and total aftertax').setTimestamp().setThumbnail('https://upload.wikimedia.org/wikipedia/commons/f/f9/Money_Cash.jpg').addFields(
-		{ name: 'Expense', value: `${discordValue.data1}`, inline: true},
-		{ name: 'Pre-tax', value: `${discordValue.data2}`, inline: true },
-		{ name: 'Total', value: `${discordValue.data3}`, inline: true },
-	);
 
-  for (let i=0;i<chars.length;i++) {
-    if (message.content === chars[i]) {
-      message.channel.send({embeds: [embed]});
-      let splitMsg = message.content.split(' ')
-      value.push(splitMsg);
+// need to use async/await to retrieve username
+client.on('messageCreate', (message) => {
+  let dev = 'user';
+    const embed = new EmbedBuilder().setTitle('Budget Information').setDescription('Stephens expensive budget with pretax and total aftertax').setTimestamp().setThumbnail('https://upload.wikimedia.org/wikipedia/commons/f/f9/Money_Cash.jpg').addFields(
+      { name: 'Expense', value: `${discordValue.data1}`, inline: true},
+      { name: 'Pre-tax', value: `${discordValue.data2}`, inline: true },
+      { name: 'Total', value: `${discordValue.data3}`, inline: true },
+    ).setFooter({
+      text: `Command Requested by: ${dev}`,
+      iconURL: message.author.displayAvatarURL(),
+    });
+
+    for (let i=0;i<chars.length;i++) {
+      if (message.content === chars[i]) {
+        message.channel.send({embeds: [embed]});
+        let splitMsg = message.content.split(' ')
+        value.push(splitMsg);
+      }
     }
-  }
 
 });
 
