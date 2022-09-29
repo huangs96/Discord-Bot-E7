@@ -21,7 +21,14 @@ const client = new Discord.Client({
 })
 
 let discordValue = {};
-let chars = ['gas 20 30', 'girlfriend 3000 3200'];
+let arr1 = ['gas', '30', '40', 'girlfriend', '300', '400','600', '1000'];
+const setDict = new Set ();
+for (item of arr1) {
+  setDict.add(item);
+};
+
+console.log(setDict);
+
 // let dictionary = ['Adventurer Ras, Alencia, Apocalypse Ravi, Choux, Rimuru, Spirit Eye Celine, Archdemons Shadow, Belian, Rem, Remnant Violet, Maid Chloe, Hwayoung, Edward Elric, Arbiter Vildred, Cidd, Ran, Peira, Summertime Iseria, Kawerik, Mercedes, Closer Charles, Eda, Pavel, Landy, Lilias, Senya, Sylvian Sage Vivian, Conqueror Lilias, Celine, Fallen Cecilia, Violet, Holiday Yufine, Krau, Ruele of Light, Specter of Tenebria, Mort, Kise, Judge Kise, Operator Sigret, Kayron, Aria, Troublemaker Crozet, Ravi, Fairytale Tenebria'];
 
 
@@ -83,24 +90,23 @@ client.on('messageCreate', async (message) => {
 
   if (message.author.bot) return;
 
-  const metaData = await googleSheets.spreadsheets.get({
-    auth,
-    spreadsheetId
-  });
+  let m = message.content.split('-');
+  console.log(m.length);
+  let f = m.map(x => {
+    return x;
+  })
+  console.log(f);
 
-  const readData = await googleSheets.spreadsheets.values.get({
-    auth, //auth object
-    spreadsheetId, // spreadsheet id
-    range: "Sheet1!A:C", //range of cells to read from.
-  });
+  console.log(setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2]));
+
   
+
+if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
 
   let arr = [];
-  const premessage = message.content.split(' ');
+  const premessage = message.content.split('-');
   arr.push(premessage);
-  console.log('arr------', arr);
-  
-  
+
   const getRows = googleSheets.spreadsheets.values.append({
     auth,
     spreadsheetId,
@@ -111,30 +117,38 @@ client.on('messageCreate', async (message) => {
     }
   });
 
-  let dev = 'user';
-  
-  const embed = new EmbedBuilder().setTitle('Budget Information').setDescription('Stephens expensive budget with pretax and total aftertax').setTimestamp().setThumbnail('https://upload.wikimedia.org/wikipedia/commons/f/f9/Money_Cash.jpg').addFields(
-  { name: 'Expense', value: `${discordValue.data1}`, inline: true},
-    { name: 'Pre-tax', value: `${discordValue.data2}`, inline: true },
-    { name: 'Total', value: `${discordValue.data3}`, inline: true },
-  ).setFooter({
-    text: `Command Requested by: ${dev}`,
-    iconURL: message.author.displayAvatarURL(),
+  const metaData = await googleSheets.spreadsheets.get({
+    auth,
+    spreadsheetId
+  });
+
+  const readData = await googleSheets.spreadsheets.values.get({
+    auth, //auth object
+    spreadsheetId, // spreadsheet id
+    range: "Sheet1!A:C", //range of cells to read from.
   });
 
   let sheetsData = readData.data.values.values();
+  for (let x of sheetsData) {
+    discordValue.data1 = x[0];
+    discordValue.data2 = x[1];
+    discordValue.data3 = x[2];
+  };
+  let dev = 'user';
 
-    for (let x of sheetsData) {
-      console.log('x---------', x);
-      discordValue.data1 = x[0];
-      discordValue.data2 = x[1];
-      discordValue.data3 = x[2];
-    };
+  const embed = new EmbedBuilder().setTitle('Budget Information').setDescription('Stephens expensive budget with pretax and total aftertax').setTimestamp().setThumbnail('https://upload.wikimedia.org/wikipedia/commons/f/f9/Money_Cash.jpg').addFields(
+    { name: 'Expense', value: `${discordValue.data1}`, inline: true},
+      { name: 'Pre-tax', value: `${discordValue.data2}`, inline: true },
+      { name: 'Total', value: `${discordValue.data3}`, inline: true },
+    ).setFooter({
+      text: `Command Requested by: ${dev}`,
+      iconURL: message.author.displayAvatarURL(),
+    });
 
-
-    console.log('embed', embed.build());
-
-    message.channel.send({embeds: [embed]});
+  message.channel.send({embeds: [embed]});
+} else if (m.length === 3) {
+  message.channel.send('No Budget Added');
+};
 
 
 });
