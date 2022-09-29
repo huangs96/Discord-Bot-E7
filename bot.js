@@ -81,6 +81,8 @@ client.on("ready", () => {
 // need to use async/await to retrieve username
 client.on('messageCreate', async (message) => {
 
+  if (message.author.bot) return;
+
   const metaData = await googleSheets.spreadsheets.get({
     auth,
     spreadsheetId
@@ -96,12 +98,10 @@ client.on('messageCreate', async (message) => {
   let arr = [];
   const premessage = message.content.split(' ');
   arr.push(premessage);
-  console.log(arr);
+  console.log('arr------', arr);
   
   
-  
-  
-  const getRows = await googleSheets.spreadsheets.values.append({
+  const getRows = googleSheets.spreadsheets.values.append({
     auth,
     spreadsheetId,
     range: "Sheet1!A1:B3",
@@ -110,35 +110,32 @@ client.on('messageCreate', async (message) => {
       values: arr
     }
   });
-  
-  let sheetsData = await readData.data.values.values();
-  console.log(sheetsData);
-  for (let x of sheetsData) {
-    console.log(x);
-    discordValue.data1 = x[0];
-    discordValue.data2 = x[1];
-    discordValue.data3 = x[2];
-  };
 
   let dev = 'user';
-
+  
   const embed = new EmbedBuilder().setTitle('Budget Information').setDescription('Stephens expensive budget with pretax and total aftertax').setTimestamp().setThumbnail('https://upload.wikimedia.org/wikipedia/commons/f/f9/Money_Cash.jpg').addFields(
-    { name: 'Expense', value: `${discordValue.data1}`, inline: true},
-      { name: 'Pre-tax', value: `${discordValue.data2}`, inline: true },
-      { name: 'Total', value: `${discordValue.data3}`, inline: true },
-    ).setFooter({
-      text: `Command Requested by: ${dev}`,
-      iconURL: message.author.displayAvatarURL(),
-    });
+  { name: 'Expense', value: `${discordValue.data1}`, inline: true},
+    { name: 'Pre-tax', value: `${discordValue.data2}`, inline: true },
+    { name: 'Total', value: `${discordValue.data3}`, inline: true },
+  ).setFooter({
+    text: `Command Requested by: ${dev}`,
+    iconURL: message.author.displayAvatarURL(),
+  });
+
+  let sheetsData = readData.data.values.values();
+
+    for (let x of sheetsData) {
+      console.log('x---------', x);
+      discordValue.data1 = x[0];
+      discordValue.data2 = x[1];
+      discordValue.data3 = x[2];
+    };
 
 
-    for (let i=0;i<chars.length;i++) {
-      if (message.content === chars[i]) {
-        message.channel.send({embeds: [embed]});
-        // let splitMsg = message.content.split(' ')
-        // value.push(splitMsg);
-      }
-    }
+    console.log('embed', embed.build());
+
+    message.channel.send({embeds: [embed]});
+
 
 });
 
