@@ -21,7 +21,7 @@ const client = new Discord.Client({
 })
 
 let discordValue = {};
-let chars = ['gas', '30', '40', 'girlfriend', '300', '400','600', '1000', 'Adventurer Ras', 'Alencia', 'Apocalypse Ravi', 'Choux', 'Rimuru', 'Spirit Eye Celine', 'Archdemons Shadow', 'Belian', 'Rem', 'Remnant', 'Violet', 'Maid Chloe', 'Hwayoung', 'Edward Elric', 'Arbiter Vildred', 'Cidd', 'Ran', 'Peira', 'Summertime', 'Iseria', 'Kawerik', 'Mercedes', 'Closer Charles', 'Eda', 'Pavel', 'Landy', 'Lilias', 'Senya', 'Sylvian Sage Vivian', 'Conqueror Lilias', 'Celine', 'Fallen Cecilia', 'Violet', 'Holiday Yufine', 'Krau', 'Ruele of Light', 'Specter of Tenebria', 'Mort', 'Kise', 'Judge Kise', 'Operator Sigret', 'Kayron', 'Aria', 'Troublemaker Crozet', 'Ravi', 'Fairytale Tenebria'];
+let chars = ['Adventurer Ras', 'Alencia', 'Apocalypse Ravi', 'Choux', 'Rimuru', 'Spirit Eye Celine', 'Archdemons Shadow', 'Belian', 'Rem', 'Remnant', 'Violet', 'Maid Chloe', 'Hwayoung', 'Edward Elric', 'Arbiter Vildred', 'Cidd', 'Ran', 'Peira', 'Summertime', 'Iseria', 'Kawerik', 'Mercedes', 'Closer Charles', 'Eda', 'Pavel', 'Landy', 'Lilias', 'Senya', 'Sylvian Sage Vivian', 'Conqueror Lilias', 'Celine', 'Fallen Cecilia', 'Violet', 'Holiday Yufine', 'Krau', 'Ruele of Light', 'Specter of Tenebria', 'Mort', 'Kise', 'Judge Kise', 'Operator Sigret', 'Kayron', 'Aria', 'Troublemaker Crozet', 'Ravi','Fairytale Tenebria'];
 
 // setting dictionary/object for chars array to match with user input
 const setDict = new Set ();
@@ -29,9 +29,6 @@ for (item of chars) {
   let finalItem = item.toLowerCase();
   setDict.add(finalItem);
 };
-
-console.log(setDict);
-
 
   const auth = new google.auth.GoogleAuth({
     keyFile: "credentials.json",
@@ -61,8 +58,6 @@ client.on("ready", () => {
 client.on('messageCreate', async (message) => {
 
   if (message.author.bot) return;
-
-  console.log('setDict---', setDict);
 
   let n = message.content.split('-');
   const m = n.map(o => {
@@ -104,15 +99,18 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
   const readData = await googleSheets.spreadsheets.values.get({
     auth, //auth object
     spreadsheetId, // spreadsheet id
-    range: "Comp Search!B:D", //range of cells to read from.
+    range: "Comp Search!B9:P15", //range of cells to read from.
   });
 
   let sheetsData = readData.data.values.values();
   for (let x of sheetsData) {
-    discordValue.data1 = x[0];
-    discordValue.data2 = x[1];
+    // console.log('x----', x);
+    console.log('x1------', x[0], x[1],x[2]);
+    discordValue.reco = [x[0], x[1], x[2]];
+    discordValue.data1 = x[1];
     discordValue.data3 = x[2];
   };
+  console.log(discordValue);
 
   let dev = message.member.user.tag;
 
