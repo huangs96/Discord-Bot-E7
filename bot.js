@@ -21,15 +21,16 @@ const client = new Discord.Client({
 })
 
 let discordValue = {};
-let arr1 = ['gas', '30', '40', 'girlfriend', '300', '400','600', '1000'];
+let chars = ['gas', '30', '40', 'girlfriend', '300', '400','600', '1000', 'Adventurer Ras', 'Alencia', 'Apocalypse Ravi', 'Choux', 'Rimuru', 'Spirit Eye Celine', 'Archdemons Shadow', 'Belian', 'Rem', 'Remnant', 'Violet', 'Maid Chloe', 'Hwayoung', 'Edward Elric', 'Arbiter Vildred', 'Cidd', 'Ran', 'Peira', 'Summertime', 'Iseria', 'Kawerik', 'Mercedes', 'Closer Charles', 'Eda', 'Pavel', 'Landy', 'Lilias', 'Senya', 'Sylvian Sage Vivian', 'Conqueror Lilias', 'Celine', 'Fallen Cecilia', 'Violet', 'Holiday Yufine', 'Krau', 'Ruele of Light', 'Specter of Tenebria', 'Mort', 'Kise', 'Judge Kise', 'Operator Sigret', 'Kayron', 'Aria', 'Troublemaker Crozet', 'Ravi', 'Fairytale Tenebria'];
+
+// setting dictionary/object for chars array to match with user input
 const setDict = new Set ();
-for (item of arr1) {
-  setDict.add(item);
+for (item of chars) {
+  let finalItem = item.toLowerCase();
+  setDict.add(finalItem);
 };
 
 console.log(setDict);
-
-// let dictionary = ['Adventurer Ras, Alencia, Apocalypse Ravi, Choux, Rimuru, Spirit Eye Celine, Archdemons Shadow, Belian, Rem, Remnant Violet, Maid Chloe, Hwayoung, Edward Elric, Arbiter Vildred, Cidd, Ran, Peira, Summertime Iseria, Kawerik, Mercedes, Closer Charles, Eda, Pavel, Landy, Lilias, Senya, Sylvian Sage Vivian, Conqueror Lilias, Celine, Fallen Cecilia, Violet, Holiday Yufine, Krau, Ruele of Light, Specter of Tenebria, Mort, Kise, Judge Kise, Operator Sigret, Kayron, Aria, Troublemaker Crozet, Ravi, Fairytale Tenebria'];
 
 
   const auth = new google.auth.GoogleAuth({
@@ -46,58 +47,35 @@ console.log(setDict);
   const googleSheets = google.sheets({version: "v4", auth: clients });
 
   
-  const spreadsheetId = "1kj5iar2zGgF9r-OjDCHtRGwvL5tAWBeyw8HG08S7rZQ";
-  
-  
-  //Get metadata about spreadsheet
-
-//   const metaData = googleSheets.spreadsheets.get({
-//     auth,
-//     spreadsheetId
-//   });
+  const spreadsheetId = "1c6TyHAnRHY0o4r823RFtTzkZDdU9aGx1bBAGZZibn-U";
 
 
-//   const getRows = googleSheets.spreadsheets.values.append({
-//     auth,
-//     spreadsheetId,
-//     range: "Sheet1!A1:B8",
-//     valueInputOption: "USER_ENTERED",
-//     resource: {
-//       values: value
-//     }
-//   })
-
-//   const readData = googleSheets.spreadsheets.values.get({
-//     auth, //auth object
-//     spreadsheetId, // spreadsheet id
-//     range: "Sheet1!A:C", //range of cells to read from.
-// }) 
-
-//   console.log(readData);
-
-  //send the data with the response
-
-
-
+// bot is ready 
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
 
 
-// need to use async/await to retrieve username
+// using message parameter in messageCreate to receive discord messages
 client.on('messageCreate', async (message) => {
 
   if (message.author.bot) return;
 
-  let m = message.content.split('-');
-  console.log(m.length);
+  console.log('setDict---', setDict);
+
+  let n = message.content.split('-');
+  const m = n.map(o => {
+    return o.toLowerCase();
+  });
   let f = m.map(x => {
     return x;
-  })
-  console.log(f);
+  });
 
-  console.log(setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2]));
+  // if (m.every(setDict.has)) {
+  //   m + '1';
+  //   console.log(m);
+  // }
 
   
 
@@ -107,10 +85,11 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
   const premessage = message.content.split('-');
   arr.push(premessage);
 
-  const getRows = googleSheets.spreadsheets.values.append({
+  // add values into cells
+  const getRows = googleSheets.spreadsheets.values.update({
     auth,
     spreadsheetId,
-    range: "Sheet1!A1:B3",
+    range: "Comp Search!B6:D6",
     valueInputOption: "USER_ENTERED",
     resource: {
       values: arr
@@ -125,7 +104,7 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
   const readData = await googleSheets.spreadsheets.values.get({
     auth, //auth object
     spreadsheetId, // spreadsheet id
-    range: "Sheet1!A:C", //range of cells to read from.
+    range: "Comp Search!B:D", //range of cells to read from.
   });
 
   let sheetsData = readData.data.values.values();
@@ -134,12 +113,17 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
     discordValue.data2 = x[1];
     discordValue.data3 = x[2];
   };
-  let dev = 'user';
 
-  const embed = new EmbedBuilder().setTitle('Budget Information').setDescription('Stephens expensive budget with pretax and total aftertax').setTimestamp().setThumbnail('https://upload.wikimedia.org/wikipedia/commons/f/f9/Money_Cash.jpg').addFields(
-    { name: 'Expense', value: `${discordValue.data1}`, inline: true},
-      { name: 'Pre-tax', value: `${discordValue.data2}`, inline: true },
-      { name: 'Total', value: `${discordValue.data3}`, inline: true },
+  let dev = message.member.user.tag;
+
+  const embed = new EmbedBuilder().setTitle('Enemy Defense' + ':' + ' ' + 'Lillias/Choux/Senya').setDescription('The offense below is safer than condom with a man').setTimestamp().setThumbnail('https://qtoptens.com/wp-content/uploads/2021/08/Celestial_Mercedes.png.webp').addFields(
+    { name: 'Recommended Offense', value: `${discordValue.data1}`, inline: true},
+      { name: 'Alternative 1', value: `${discordValue.data2}`, inline: true },
+      { name: 'Alternative 2', value: `${discordValue.data2}`, inline: true },
+      { name: 'Notes: Recommended', value: `${discordValue.data3}`, inline: false },
+      { name: 'Notes: Alternative 1', value: `${discordValue.data3}`, inline: false },
+      { name: 'Notes: Alternative 2', value: `${discordValue.data3}`, inline: false },
+      { name: 'Artifacts', value: `${discordValue.data3}`, inline: false },
     ).setFooter({
       text: `Command Requested by: ${dev}`,
       iconURL: message.author.displayAvatarURL(),
@@ -147,7 +131,7 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
 
   message.channel.send({embeds: [embed]});
 } else if (m.length === 3) {
-  message.channel.send('No Budget Added');
+  message.channel.send('No Build Available');
 };
 
 
