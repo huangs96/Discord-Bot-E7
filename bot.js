@@ -99,67 +99,42 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
   const readData = await googleSheets.spreadsheets.values.get({
     auth, //auth object
     spreadsheetId, // spreadsheet id
-    range: "Comp Search!B9:P15", //range of cells to read from.
+    range: "Comp Search!B9:P18", //range of cells to read from.
   });
 
-  [
-    'Recommended',
-    '',
-    '',
-    '',
-    'Alternative',
-    'Apocalypse Ravi',
-    'Krau',
-    'Ruele of Light',
-    '',
-    'Hwayoung',
-    'Angel of Light Angelica',
-    'Krau',
-    '',
-    'Apocalypse Ravi',
-    'Krau',
-    'Inferno Khawazu',
-    '',
-    'Krau',
-    'Inferno Khawazu',
-    'Blood Moon Haste',
-    'Crimson Seed',
-    'Defensive Artifact',
-    "Water's Origin",
-    '',
-    "Uberius's Tooth",
-    "Tagahel's Ancient Book",
-    'Defensive Artifact',
-    '',
-    'Crimson Seed',
-    'Defensive Artifact',
-    'Spear of Purification',
-    '',
-    'Defensive Artifact',
-    'Spear of Purification',
-    "Idol's Cheer"
-  ]
+  
 
   let sheetsData = readData.data.values;
-  let finalArr = [].concat(...sheetsData);
-  console.log(finalArr);
+  console.log('sheetsData----', sheetsData);
+  let finalArr = [];
+  for(let i = 0; i < sheetsData.length; i++) {
+    finalArr = finalArr.concat(sheetsData[i]);
+    }
+  console.log('finalArr--------', finalArr);
 
   discordValue.reco = [finalArr[5],' ' + finalArr[6], ' ' + finalArr[7]];
-  discordValue.alt1 = [finalArr[5],' ' + finalArr[6], ' ' + finalArr[7]];
-  discordValue.alt2 = [finalArr[5],' ' + finalArr[6], ' ' + finalArr[7]];
-  console.log(discordValue);
+  discordValue.alt1 = [finalArr[9],' ' + finalArr[10], ' ' + finalArr[11]];
+  discordValue.alt2 = [finalArr[13],' ' + finalArr[14], ' ' + finalArr[15]];
+  discordValue.alt3 = [finalArr[18],' ' + finalArr[19], ' ' + finalArr[20]];
+  discordValue.notesR = [finalArr[48]];
+  discordValue.notesAlt1 = [finalArr[52]];
+  discordValue.notesAlt2 = [finalArr[56]];
+  discordValue.notesAlt3 = [finalArr[0]];
+  console.log('discordValue----------', discordValue);
 
 
   let dev = message.member.user.tag;
 
   const embed = new EmbedBuilder().setTitle('Enemy Defense' + ':' + ' ' + 'Lillias/Choux/Senya').setDescription('The offense below is safer than condom with a man').setTimestamp().setThumbnail('https://qtoptens.com/wp-content/uploads/2021/08/Celestial_Mercedes.png.webp').addFields(
     { name: 'Recommended Offense', value: `${discordValue.reco}`, inline: true},
-      { name: 'Alternative 1', value: `${discordValue.data2}`, inline: true },
-      { name: 'Alternative 2', value: `${discordValue.data2}`, inline: true },
-      { name: 'Notes: Recommended', value: `${discordValue.data3}`, inline: false },
-      { name: 'Notes: Alternative 1', value: `${discordValue.data3}`, inline: false },
-      { name: 'Notes: Alternative 2', value: `${discordValue.data3}`, inline: false },
-      { name: 'Artifacts', value: `${discordValue.data3}`, inline: false },
+      { name: 'Alternative 1', value: `${discordValue.alt1}`, inline: false },
+      { name: 'Alternative 2', value: `${discordValue.alt2}`, inline: false },
+      // { name: 'Alternative 3', value: `${discordValue.alt3}`, inline: false },
+      { name: 'Notes: Recommended', value: `${discordValue.notesR}`, inline: false },
+      { name: 'Notes: Alternative 1', value: `${discordValue.notesAlt1}`, inline: false },
+      // { name: 'Notes: Alternative 2', value: `${discordValue.notesAlt2}`, inline: false },
+      // { name: 'Notes: Alternative 3', value: `${discordValue.notesAlt3}`, inline: false },
+      { name: 'Artifacts', value: `${discordValue.reco}`, inline: false },
     ).setFooter({
       text: `Command Requested by: ${dev}`,
       iconURL: message.author.displayAvatarURL(),
