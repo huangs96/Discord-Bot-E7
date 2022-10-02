@@ -101,7 +101,7 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
     range: "Comp Search!B9:P18", //range of cells to read from.
   });
 
-  
+  // reading data in certain cells, putting data into array
 
   let sheetsData = readData.data.values;
   console.log('sheetsData----', sheetsData);
@@ -112,48 +112,55 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
   console.log('finalArr--------', finalArr);
   console.log('arraylength------', finalArr.length);
 
-  // variables for cell positions on Google Sheet
+  // if google sheets does not populate data, return
 
-  const recommendedBuild = message ? [finalArr[5],' ' + finalArr[6], ' ' + finalArr[7]] : 'No Information Available';
+  if (finalArr.includes('#N/A')) {
+    message.channel.send('No build data available for this team');
+    return;
+  }
 
-  const alternatebuild1 = message || message === undefined ? [finalArr[9],' ' + finalArr[10], ' ' + finalArr[11]] : 'No Information Available';
+    // variables for cell positions on Google Sheet
 
-  const alternatebuild2 = message ? [finalArr[13],' ' + finalArr[14], ' ' + finalArr[15]] : 'No Information Available';
+    const recommendedBuild = message || message != undefined || message !== '' ? [finalArr[5],' ' + finalArr[6], ' ' + finalArr[7]] : 'No Information Available';
 
-  const alternatebuild3 = message ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Information Available';
+    const alternatebuild1 = message || message != undefined || message !== '' || message === undefined ? [finalArr[9],' ' + finalArr[10], ' ' + finalArr[11]] : 'No Information Available';
 
-  const recommendedNotes = message ? [finalArr[48]] : 'No Information Available';
+    const alternatebuild2 = message || message !== undefined || message !== '' ? [finalArr[13],' ' + finalArr[14], ' ' + finalArr[15]] : 'No Information Available';
 
-  const alternativeNotes1 = message ? [finalArr[52]] : 'No Information Available';
+    const alternatebuild3 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Information Available';
 
-  const alternativeNotes2 = message || message === [undefined] ? [finalArr[52]] : 'No Information Available';
+    const recommendedNotes = message || message !== undefined || message !== '' ? [finalArr[48]] : 'No Information Available';
 
-  const alternativeNotes3 = message ? [finalArr[0]] : 'No Information Available';
+    const alternativeNotes1 = message || message !== undefined || message !== '' ? [finalArr[52]] : 'No Information Available';
 
-  const recommendedArtifacts = message ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Information Available';
+    const alternativeNotes2 = message || message !== undefined || message !== '' ? [finalArr[52]] : 'No Information Available';
 
+    const alternativeNotes3 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Information Available';
 
-  let dev = message.member.user.tag;
+    const recommendedArtifacts = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Information Available';
 
-  const embed = new EmbedBuilder().setTitle('Enemy Defense' + ':' + ' ' + 'Lillias/Choux/Senya').setDescription('The offense below is safer than condom with a man').setTimestamp().setThumbnail('https://qtoptens.com/wp-content/uploads/2021/08/Celestial_Mercedes.png.webp').addFields(
-    { name: 'Recommended Offense', value: `${recommendedBuild}`, inline: true},
-      { name: 'Alternative 1', value: `${alternatebuild1}`, inline: false },
-      { name: 'Alternative 2', value: `${alternatebuild2}`, inline: false },
-      { name: 'Alternative 3', value: `${alternatebuild3}`, inline: false },
-      { name: 'Notes: Recommended', value: `${recommendedNotes}`, inline: false },
-      { name: 'Notes: Alternative 1', value: `${alternativeNotes1}`, inline: false },
-      { name: 'Notes: Alternative 2', value: `${alternativeNotes2}`, inline: false },
-      { name: 'Notes: Alternative 3', value: `${discordValue.notesAlt3}`, inline: false },
-      { name: 'Recommended Artifacts', value: `${recommendedArtifacts}`, inline: false },
-    ).setFooter({
-      text: `Command Requested by: ${dev}`,
-      iconURL: message.author.displayAvatarURL(),
-    });
+    //getting username tag for embed
+    let dev = message.member.user.tag;
 
-  message.channel.send({embeds: [embed]});
-} else if (m.length === 3) {
-  message.channel.send('No Build Available');
-};
+    const embed = new EmbedBuilder().setTitle('Enemy Defense' + ':' + ' ' + 'Lillias/Choux/Senya').setDescription('The offense below is safer than condom with a man').setTimestamp().setThumbnail('https://qtoptens.com/wp-content/uploads/2021/08/Celestial_Mercedes.png.webp').addFields(
+      { name: 'Recommended Offense', value: `${recommendedBuild}`, inline: true},
+        { name: 'Alternative 1', value: `${alternatebuild1}`, inline: false },
+        { name: 'Alternative 2', value: `${alternatebuild2}`, inline: false },
+        { name: 'Alternative 3', value: `${alternatebuild3}`, inline: false },
+        { name: 'Notes: Recommended', value: `${recommendedNotes}`, inline: false },
+        { name: 'Notes: Alternative 1', value: `${alternativeNotes1}`, inline: false },
+        { name: 'Notes: Alternative 2', value: `${alternativeNotes2}`, inline: false },
+        { name: 'Notes: Alternative 3', value: `${alternativeNotes3}`, inline: false },
+        { name: 'Recommended Artifacts', value: `${recommendedArtifacts}`, inline: false },
+      ).setFooter({
+        text: `Command Requested by: ${dev}`,
+        iconURL: message.author.displayAvatarURL(),
+      });
+
+    message.channel.send({embeds: [embed]});
+  } else if (m.length === 3) {
+    message.channel.send('No Build Available');
+  };
 
 
 });
