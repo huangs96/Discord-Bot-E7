@@ -75,6 +75,7 @@ client.on('messageCreate', async (message) => {
 
 if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
 
+
   let arr = [];
   const premessage = message.content.split('-');
   arr.push(premessage);
@@ -98,7 +99,7 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
   const readData = await googleSheets.spreadsheets.values.get({
     auth, //auth object
     spreadsheetId, // spreadsheet id
-    range: "Comp Search!B9:P18", //range of cells to read from.
+    range: "Comp Search!B9:L18", //range of cells to read from.
   });
 
   // reading data in certain cells, putting data into array
@@ -112,6 +113,22 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
   console.log('finalArr--------', finalArr);
   console.log('arraylength------', finalArr.length);
 
+  if (finalArr.length < 45) {
+    let finalLength = 45 - finalArr.length;
+    const noData = 'No Data;';
+    let multiData = noData.repeat(finalLength);
+    console.log('multiData-----', multiData);
+    const separStr = multiData.split(';');
+    console.log('separStr------', separStr);
+    for (let x=0;x<separStr.length;x++) {
+      console.log(separStr.indexOf(' '));
+      separStr.splice(separStr.length, 1, 'No Data');
+      finalArr.push(separStr);
+    }
+    console.log('lesslength-----', finalArr);
+  }
+
+
   // if google sheets does not populate data, return
 
   if (finalArr.includes('#N/A')) {
@@ -121,37 +138,84 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
 
     // variables for cell positions on Google Sheet
 
+    // recommended  
+
     const recommendedBuild = message || message != undefined || message !== '' ? [finalArr[5],' ' + finalArr[6], ' ' + finalArr[7]] : 'No Information Available';
 
-    const alternatebuild1 = message || message != undefined || message !== '' || message === undefined ? [finalArr[9],' ' + finalArr[10], ' ' + finalArr[11]] : 'No Information Available';
+    const recommendedNotes = message || message !== undefined || message !== '' ? [finalArr[36]] : 'No Information Available';
 
-    const alternatebuild2 = message || message !== undefined || message !== '' ? [finalArr[13],' ' + finalArr[14], ' ' + finalArr[15]] : 'No Information Available';
+    const recommendedArtifacts = message || message !== undefined || message !== '' ? [finalArr[16],' ' + finalArr[17], ' ' + finalArr[18]] : 'No Information Available';
 
-    const alternatebuild3 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Information Available';
+    // alternate1
 
-    const recommendedNotes = message || message !== undefined || message !== '' ? [finalArr[48]] : 'No Information Available';
+    const alternativebuild1 = message || message != undefined || message !== '' || message === undefined ? [finalArr[9],' ' + finalArr[10], ' ' + finalArr[11]] : 'No Information Available';
 
-    const alternativeNotes1 = message || message !== undefined || message !== '' ? [finalArr[52]] : 'No Information Available';
+    const alternativeNotes1 = message || message !== undefined || message !== '' ? [finalArr[40]] : 'No Information Available';
 
-    const alternativeNotes2 = message || message !== undefined || message !== '' ? [finalArr[52]] : 'No Information Available';
+    const alternativeArtifacts1 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Information Available';
 
-    const alternativeNotes3 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Information Available';
+    //alternate2
 
-    const recommendedArtifacts = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Information Available';
+    const alternativebuild2 = message || message !== undefined || message !== '' ? [finalArr[13],' ' + finalArr[14], ' ' + finalArr[15]] : 'No Information Available';
+
+    const alternativeNotes2 = message || message !== undefined || message !== '' ? [finalArr[44]] : 'No Information Available';
+
+    const alternativeArtifacts2 = message || message !== undefined || message !== '' ? [finalArr[24],' ' + finalArr[25], ' ' + finalArr[26]] : 'No Information Available';
+
+    // //alternate3
+
+    // const alternativebuild3 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Information Available';
+
+    // const alternativeNotes3 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Information Available';
+
+    // const alternativeArtifacts3 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Information Available';
+
+    // //alternate4
+
+    // const alternativebuild4 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Information Available';
+
+    // const alternativeNotes4 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Information Available';
+
+    // const alternativeArtifacts4 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Information Available';
+
+    // //alternate5
+
+    // const alternativebuild5 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Information Available';
+
+    // const alternativeNotes5 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Information Available';
+
+    // const alternativeArtifacts5 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Information Available';
+
+
 
     //getting username tag for embed
     let dev = message.member.user.tag;
 
     const embed = new EmbedBuilder().setTitle('Enemy Defense' + ':' + ' ' + 'Lillias/Choux/Senya').setDescription('The offense below is safer than condom with a man').setTimestamp().setThumbnail('https://qtoptens.com/wp-content/uploads/2021/08/Celestial_Mercedes.png.webp').addFields(
+      //recommended
       { name: 'Recommended Offense', value: `${recommendedBuild}`, inline: true},
-        { name: 'Alternative 1', value: `${alternatebuild1}`, inline: false },
-        { name: 'Alternative 2', value: `${alternatebuild2}`, inline: false },
-        { name: 'Alternative 3', value: `${alternatebuild3}`, inline: false },
-        { name: 'Notes: Recommended', value: `${recommendedNotes}`, inline: false },
-        { name: 'Notes: Alternative 1', value: `${alternativeNotes1}`, inline: false },
-        { name: 'Notes: Alternative 2', value: `${alternativeNotes2}`, inline: false },
-        { name: 'Notes: Alternative 3', value: `${alternativeNotes3}`, inline: false },
-        { name: 'Recommended Artifacts', value: `${recommendedArtifacts}`, inline: false },
+      { name: 'Notes: Recommended', value: `${recommendedNotes}`, inline: false },
+      { name: 'Recommended Artifacts', value: `${recommendedArtifacts}`, inline: false },
+      //alternate1
+      { name: 'Alternative 1 Offense', value: `${alternativebuild1}`, inline: false },
+      { name: 'Notes: Alternative 1', value: `${alternativeNotes1}`, inline: false },
+      { name: 'Alternate1 Artifacts', value: `${alternativeArtifacts1}`, inline: false },
+      //alternate2
+      { name: 'Alternative 2 Offense', value: `${alternativebuild2}`, inline: false },
+      { name: 'Notes: Alternative 2', value: `${alternativeNotes2}`, inline: false },
+      { name: 'Alternate2 Artifacts', value: `${alternativeArtifacts2}`, inline: false },
+      //alternate3
+      // { name: 'Alternative 3 Offense', value: `${alternativebuild3}`, inline: false },
+      // { name: 'Notes: Alternative 3', value: `${alternativeNotes3}`, inline: false },
+      // { name: 'Alternate3 Artifacts', value: `${alternativeArtifacts3}`, inline: false },
+      // //alternate4
+      // { name: 'Alternative 4 Offense', value: `${alternativebuild4}`, inline: false },
+      // { name: 'Notes: Alternative 4', value: `${alternativeNotes4}`, inline: false },
+      // { name: 'Alternate4 Artifacts', value: `${alternativeArtifacts4}`, inline: false },
+      // //alternate5
+      // { name: 'Alternative 5 Offense', value: `${alternativebuild5}`, inline: false },
+      // { name: 'Notes: Alternative 5', value: `${alternativeNotes5}`, inline: false },
+      // { name: 'Alternate5 Artifacts', value: `${alternativeArtifacts5}`, inline: false },
       ).setFooter({
         text: `Command Requested by: ${dev}`,
         iconURL: message.author.displayAvatarURL(),
