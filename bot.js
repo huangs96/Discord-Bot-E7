@@ -107,81 +107,62 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
     range: "Comp Search!B9:L18", //range of cells to read from.
   });
 
-  // reading data in certain cells, putting data into an array
+  // reading data in certain cells, pushing values in array, referencing 2d array for object/dictionary for consistent reference
 
   let sheetsData = readData.data.values;
-  console.log('sheetsData----', sheetsData);
   let finalArr = [];
+  let dataObj = {};
 
-  const sheetsData2 = sheetsData.map((element, index) => {
-    console.log('element-----', element);
-    console.log('index-------', index);
-    console.log(element[index]);
-  })
+  sheetsData.map((x) => {
+    finalArr.push(x);
+  });
 
-  // const twoDMap = sheetsData.filter(function(value, index) {
-  //   console.log('value--------', value[2], 3);
-  // })
+  console.log('map1-------', finalArr);
 
-  
-  // for(let i = 0; i < sheetsData.length; i++) {
-  //   finalArr = finalArr.concat(sheetsData[i]);
-  // };
+  dataObj.units = finalArr[2];
+  dataObj.artifacts = finalArr[5];
+  dataObj.notes = finalArr[9];
 
-  console.log('arraylength------', finalArr.length);
-
-  // maximum arr length is 45 - if google sheets return less than 45, add spaces into array to make length 45
-
-  if (finalArr.length < 45) {
-    let finalLength = 45 - finalArr.length;
-    const noData = 'No Data;';
-    let multiData = noData.repeat(finalLength);
-    const separStr = multiData.split(';');
-    for (let x=0;x<separStr.length;x++) {
-      console.log(separStr[x]);
-      finalArr.push(separStr[x]);
-    }
-  }
-  console.log(finalArr);
-  console.log('arraylength222222------', finalArr.length);
+  console.log('data------', dataObj);
+  console.log('datalength------', dataObj.units.length);
 
 
   // if google sheets does not populate data, return
 
-  if (finalArr.includes('#N/A')) {
-    message.channel.send('No build data available for this team');
-    return;
-  }
+  // if (finalArr.includes('#N/A')) {
+  //   message.channel.send('No build data available for this team');
+  //   return;
+  // }
 
-    // variables for cell positions on Google Sheet
+    // ** variables for cell positions on Google Sheet
 
     // recommended
 
-    const recommendedBuild = finalArr[5] !== '' || finalArr[6] !== '' || finalArr[7] !== '' ? [finalArr[5],' ' + finalArr[6], ' ' + finalArr[7]] : 'No Data';
+  const recommendedBuild = dataObj.units[0] + ',' + ' ' + dataObj.units[1] + ',' + ' ' + dataObj.units[2];
 
-    const recommendedArtifacts = finalArr[8] !== '' || finalArr[9] !== '' || finalArr[10] !== '' ? [finalArr[8],' ' + finalArr[9], ' ' + finalArr[10]] : 'No Data';
+  const recommendedArtifacts = dataObj.artifacts[0] + ',' + ' ' + dataObj.artifacts[1] + ',' + ' ' + dataObj.artifacts[2];
 
-    const recommendedNotes = finalArr[12] !== '' ? [finalArr[12]] : 'No Data';
-
-
-    // alternate1
-
-    const alternativebuild1 = finalArr[9] !== '' && finalArr[10] !== '' || finalArr[11] !== '' ? [finalArr[9],' ' + finalArr[10], ' ' + finalArr[11]] : 'No Data';
-
-    const alternativeArtifacts1 = finalArr[20] !== '' || finalArr[21] !== '' || finalArr[22] !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Data';
-
-    const alternativeNotes1 = finalArr[40] !== '' ? [finalArr[40]] : 'No Data';
+  const recommendedNotes = dataObj.notes[0];
 
 
-    //alternate2
+    // // alternate1
 
-    const alternativebuild2 = finalArr[13] !== '' || finalArr[14] !== '' || finalArr[15] !== '' ? [finalArr[13],' ' + finalArr[14], ' ' + finalArr[15]] : 'No Data';
+    const alternativeBuild1 = dataObj.units.length >= 7 ? dataObj.units[4] + ',' + ' ' + dataObj.units[5] + ',' + ' ' + dataObj.units[6] : 'No Data';
+
+    const alternativeArtifacts1 = dataObj.artifacts.length >= 7 ? dataObj.artifacts[4] + ',' + ' ' + dataObj.artifacts[5] + ',' + ' ' + dataObj.artifacts[6] : 'No Data';
+
+    const alternativeNotes1 =  dataObj.notes.length >= 5 ? dataObj.notes[4] : 'No Data';
+
+
+    // //alternate2
+
+    const alternativeBuild2 = dataObj.units.length >= 11 ? dataObj.units[8] + ',' + ' ' + dataObj.units[9] + ',' + ' ' + dataObj.units[10] : 'No Data';
     
-    const alternativeArtifacts2 = finalArr[24] !== '' || finalArr[25] !== '' || finalArr[26] !== '' ? [finalArr[24],' ' + finalArr[25], ' ' + finalArr[26]] : 'No Data';
+    const alternativeArtifacts2 = dataObj.artifacts.length >= 11 ? dataObj.artifacts[4] + ',' + ' ' + dataObj.artifacts[5] + ',' + ' ' + dataObj.artifacts[6] : 'No Data';
 
-    const alternativeNotes2 = finalArr[44] !== '' ? [finalArr[44]] : 'No Data';
+    const alternativeNotes2 = dataObj.notes.length >= 9 ? dataObj.notes[8] : 'No Data';
 
-
+    //---------------------------------------------
     // //alternate3
 
     // const alternativebuild3 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Data';
@@ -217,11 +198,11 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
       { name: 'Recommended Artifacts', value: `${recommendedArtifacts}`, inline: false },
       { name: 'Notes: Recommended', value: `${recommendedNotes}`, inline: false },
       //alternate1
-      { name: 'Alternative 1 Offense', value: `${alternativebuild1}`, inline: false },
+      { name: 'Alternative 1 Offense', value: `${alternativeBuild1}`, inline: false },
       { name: 'Alternate1 Artifacts', value: `${alternativeArtifacts1}`, inline: false },
       { name: 'Notes: Alternative 1', value: `${alternativeNotes1}`, inline: false },
-      //alternate2
-      { name: 'Alternative 2 Offense', value: `${alternativebuild2}`, inline: false },
+      // //alternate2
+      { name: 'Alternative 2 Offense', value: `${alternativeBuild2}`, inline: false },
       { name: 'Alternate2 Artifacts', value: `${alternativeArtifacts2}`, inline: false },
       { name: 'Notes: Alternative 2', value: `${alternativeNotes2}`, inline: false },
       //alternate3
