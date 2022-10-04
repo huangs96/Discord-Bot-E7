@@ -75,10 +75,15 @@ client.on('messageCreate', async (message) => {
 
 if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
 
-
+  // breaking down discord message to send to google sheets
   let arr = [];
   const premessage = message.content.split('-');
   arr.push(premessage);
+
+  // capitalizing first letter and spacing format for consistent embed title
+  const embedTitle = premessage.map(x => {
+    return ' ' + x.charAt(0).toUpperCase() + x.slice(1).toLowerCase();   
+  })
 
   // add values into cells
   const getRows = googleSheets.spreadsheets.values.update({
@@ -107,9 +112,22 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
   let sheetsData = readData.data.values;
   console.log('sheetsData----', sheetsData);
   let finalArr = [];
-  for(let i = 0; i < sheetsData.length; i++) {
-    finalArr = finalArr.concat(sheetsData[i]);
-    }
+
+  const sheetsData2 = sheetsData.map((element, index) => {
+    console.log('element-----', element);
+    console.log('index-------', index);
+    console.log(element[index]);
+  })
+
+  // const twoDMap = sheetsData.filter(function(value, index) {
+  //   console.log('value--------', value[2], 3);
+  // })
+
+  
+  // for(let i = 0; i < sheetsData.length; i++) {
+  //   finalArr = finalArr.concat(sheetsData[i]);
+  // };
+
   console.log('arraylength------', finalArr.length);
 
   // maximum arr length is 45 - if google sheets return less than 45, add spaces into array to make length 45
@@ -119,12 +137,13 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
     const noData = 'No Data;';
     let multiData = noData.repeat(finalLength);
     const separStr = multiData.split(';');
-    for (let x=0;x<separStr.length;x++) { 
+    for (let x=0;x<separStr.length;x++) {
+      console.log(separStr[x]);
       finalArr.push(separStr[x]);
     }
   }
   console.log(finalArr);
-  console.log('arraylength------', finalArr.length);
+  console.log('arraylength222222------', finalArr.length);
 
 
   // if google sheets does not populate data, return
@@ -140,25 +159,28 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
 
     const recommendedBuild = finalArr[5] !== '' || finalArr[6] !== '' || finalArr[7] !== '' ? [finalArr[5],' ' + finalArr[6], ' ' + finalArr[7]] : 'No Data';
 
+    const recommendedArtifacts = finalArr[8] !== '' || finalArr[9] !== '' || finalArr[10] !== '' ? [finalArr[8],' ' + finalArr[9], ' ' + finalArr[10]] : 'No Data';
+
     const recommendedNotes = finalArr[12] !== '' ? [finalArr[12]] : 'No Data';
 
-    const recommendedArtifacts = finalArr[8] !== '' || finalArr[9] !== '' || finalArr[10] !== '' ? [finalArr[8],' ' + finalArr[9], ' ' + finalArr[10]] : 'No Data';
 
     // alternate1
 
     const alternativebuild1 = finalArr[9] !== '' && finalArr[10] !== '' || finalArr[11] !== '' ? [finalArr[9],' ' + finalArr[10], ' ' + finalArr[11]] : 'No Data';
 
+    const alternativeArtifacts1 = finalArr[20] !== '' || finalArr[21] !== '' || finalArr[22] !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Data';
+
     const alternativeNotes1 = finalArr[40] !== '' ? [finalArr[40]] : 'No Data';
 
-    const alternativeArtifacts1 = finalArr[20] !== '' || finalArr[21] !== '' || finalArr[22] !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Data';
 
     //alternate2
 
     const alternativebuild2 = finalArr[13] !== '' || finalArr[14] !== '' || finalArr[15] !== '' ? [finalArr[13],' ' + finalArr[14], ' ' + finalArr[15]] : 'No Data';
+    
+    const alternativeArtifacts2 = finalArr[24] !== '' || finalArr[25] !== '' || finalArr[26] !== '' ? [finalArr[24],' ' + finalArr[25], ' ' + finalArr[26]] : 'No Data';
 
     const alternativeNotes2 = finalArr[44] !== '' ? [finalArr[44]] : 'No Data';
 
-    const alternativeArtifacts2 = finalArr[24] !== '' || finalArr[25] !== '' || finalArr[26] !== '' ? [finalArr[24],' ' + finalArr[25], ' ' + finalArr[26]] : 'No Data';
 
     // //alternate3
 
@@ -189,19 +211,19 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
     //getting username tag for embed
     let dev = message.member.user.tag;
 
-    const embed = new EmbedBuilder().setTitle('Enemy Defense' + ':' + ' ' + 'Lillias/Choux/Senya').setDescription('The offense below is safer than condom with a man').setTimestamp().setThumbnail('https://qtoptens.com/wp-content/uploads/2021/08/Celestial_Mercedes.png.webp').addFields(
+    const embed = new EmbedBuilder().setTitle('Enemy Defense' + ':' + embedTitle).setDescription('The offense below is safer than condom with a man').setTimestamp().setThumbnail('https://qtoptens.com/wp-content/uploads/2021/08/Celestial_Mercedes.png.webp').addFields(
       //recommended
       { name: 'Recommended Offense', value: `${recommendedBuild}`, inline: true},
-      { name: 'Notes: Recommended', value: `${recommendedNotes}`, inline: false },
       { name: 'Recommended Artifacts', value: `${recommendedArtifacts}`, inline: false },
+      { name: 'Notes: Recommended', value: `${recommendedNotes}`, inline: false },
       //alternate1
       { name: 'Alternative 1 Offense', value: `${alternativebuild1}`, inline: false },
-      { name: 'Notes: Alternative 1', value: `${alternativeNotes1}`, inline: false },
       { name: 'Alternate1 Artifacts', value: `${alternativeArtifacts1}`, inline: false },
+      { name: 'Notes: Alternative 1', value: `${alternativeNotes1}`, inline: false },
       //alternate2
       { name: 'Alternative 2 Offense', value: `${alternativebuild2}`, inline: false },
-      { name: 'Notes: Alternative 2', value: `${alternativeNotes2}`, inline: false },
       { name: 'Alternate2 Artifacts', value: `${alternativeArtifacts2}`, inline: false },
+      { name: 'Notes: Alternative 2', value: `${alternativeNotes2}`, inline: false },
       //alternate3
       // { name: 'Alternative 3 Offense', value: `${alternativebuild3}`, inline: false },
       // { name: 'Notes: Alternative 3', value: `${alternativeNotes3}`, inline: false },
