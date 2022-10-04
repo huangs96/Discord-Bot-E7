@@ -20,7 +20,7 @@ const client = new Discord.Client({
   ]
 })
 
-let chars = ['Adventurer Ras', 'Alencia', 'Apocalypse Ravi', 'Choux', 'Rimuru', 'Spirit Eye Celine', 'Archdemons Shadow', 'Belian', 'Rem', 'Remnant', 'Violet', 'Maid Chloe', 'Hwayoung', 'Edward Elric', 'Arbiter Vildred', 'Cidd', 'Ran', 'Peira', 'Summertime', 'Iseria', 'Kawerik', 'Mercedes', 'Closer Charles', 'Eda', 'Pavel', 'Landy', 'Lilias', 'Senya', 'Sylvian Sage Vivian', 'Conqueror Lilias', 'Celine', 'Fallen Cecilia', 'Violet', 'Holiday Yufine', 'Krau', 'Ruele of Light', 'Specter of Tenebria', 'Mort', 'Kise', 'Judge Kise', 'Operator Sigret', 'Kayron', 'Aria', 'Troublemaker Crozet', 'Ravi','Fairytale Tenebria'];
+let chars = ['Adventurer Ras', 'Alencia', 'Apocalypse Ravi', 'Choux', 'Rimuru', 'Spirit Eye Celine', 'Archdemons Shadow', 'Belian', 'Rem', 'Remnant', 'Violet', 'Maid Chloe', 'Hwayoung', 'Edward Elric', 'Arbiter Vildred', 'Cidd', 'Ran', 'Peira', 'Summertime', 'Iseria', 'Kawerik', 'Mercedes', 'Closer Charles', 'Eda', 'Pavel', 'Landy', 'Lilias', 'Senya', 'Sylvian Sage Vivian', 'Conqueror Lilias', 'Celine', 'Fallen Cecilia', 'Violet', 'Holiday Yufine', 'Krau', 'Ruele of Light', 'Specter of Tenebria', 'Mort', 'Kise', 'Judge Kise', 'Operator Sigret', 'Kayron', 'Aria', 'Troublemaker Crozet', 'Ravi','Fairytale Tenebria', 'Apo'];
 
 // setting dictionary/object for chars array to match with user input
 const setDict = new Set ();
@@ -102,7 +102,7 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
     range: "Comp Search!B9:L18", //range of cells to read from.
   });
 
-  // reading data in certain cells, putting data into array
+  // reading data in certain cells, putting data into an array
 
   let sheetsData = readData.data.values;
   console.log('sheetsData----', sheetsData);
@@ -110,23 +110,21 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
   for(let i = 0; i < sheetsData.length; i++) {
     finalArr = finalArr.concat(sheetsData[i]);
     }
-  console.log('finalArr--------', finalArr);
   console.log('arraylength------', finalArr.length);
+
+  // maximum arr length is 45 - if google sheets return less than 45, add spaces into array to make length 45
 
   if (finalArr.length < 45) {
     let finalLength = 45 - finalArr.length;
     const noData = 'No Data;';
     let multiData = noData.repeat(finalLength);
-    console.log('multiData-----', multiData);
     const separStr = multiData.split(';');
-    console.log('separStr------', separStr);
-    for (let x=0;x<separStr.length;x++) {
-      console.log(separStr.indexOf(' '));
-      separStr.splice(separStr.length, 1, 'No Data');
-      finalArr.push(separStr);
+    for (let x=0;x<separStr.length;x++) { 
+      finalArr.push(separStr[x]);
     }
-    console.log('lesslength-----', finalArr);
   }
+  console.log(finalArr);
+  console.log('arraylength------', finalArr.length);
 
 
   // if google sheets does not populate data, return
@@ -138,53 +136,53 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
 
     // variables for cell positions on Google Sheet
 
-    // recommended  
+    // recommended
 
-    const recommendedBuild = message || message != undefined || message !== '' ? [finalArr[5],' ' + finalArr[6], ' ' + finalArr[7]] : 'No Information Available';
+    const recommendedBuild = finalArr[5] !== '' || finalArr[6] !== '' || finalArr[7] !== '' ? [finalArr[5],' ' + finalArr[6], ' ' + finalArr[7]] : 'No Data';
 
-    const recommendedNotes = message || message !== undefined || message !== '' ? [finalArr[36]] : 'No Information Available';
+    const recommendedNotes = finalArr[12] !== '' ? [finalArr[12]] : 'No Data';
 
-    const recommendedArtifacts = message || message !== undefined || message !== '' ? [finalArr[16],' ' + finalArr[17], ' ' + finalArr[18]] : 'No Information Available';
+    const recommendedArtifacts = finalArr[8] !== '' || finalArr[9] !== '' || finalArr[10] !== '' ? [finalArr[8],' ' + finalArr[9], ' ' + finalArr[10]] : 'No Data';
 
     // alternate1
 
-    const alternativebuild1 = message || message != undefined || message !== '' || message === undefined ? [finalArr[9],' ' + finalArr[10], ' ' + finalArr[11]] : 'No Information Available';
+    const alternativebuild1 = finalArr[9] !== '' && finalArr[10] !== '' || finalArr[11] !== '' ? [finalArr[9],' ' + finalArr[10], ' ' + finalArr[11]] : 'No Data';
 
-    const alternativeNotes1 = message || message !== undefined || message !== '' ? [finalArr[40]] : 'No Information Available';
+    const alternativeNotes1 = finalArr[40] !== '' ? [finalArr[40]] : 'No Data';
 
-    const alternativeArtifacts1 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Information Available';
+    const alternativeArtifacts1 = finalArr[20] !== '' || finalArr[21] !== '' || finalArr[22] !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Data';
 
     //alternate2
 
-    const alternativebuild2 = message || message !== undefined || message !== '' ? [finalArr[13],' ' + finalArr[14], ' ' + finalArr[15]] : 'No Information Available';
+    const alternativebuild2 = finalArr[13] !== '' || finalArr[14] !== '' || finalArr[15] !== '' ? [finalArr[13],' ' + finalArr[14], ' ' + finalArr[15]] : 'No Data';
 
-    const alternativeNotes2 = message || message !== undefined || message !== '' ? [finalArr[44]] : 'No Information Available';
+    const alternativeNotes2 = finalArr[44] !== '' ? [finalArr[44]] : 'No Data';
 
-    const alternativeArtifacts2 = message || message !== undefined || message !== '' ? [finalArr[24],' ' + finalArr[25], ' ' + finalArr[26]] : 'No Information Available';
+    const alternativeArtifacts2 = finalArr[24] !== '' || finalArr[25] !== '' || finalArr[26] !== '' ? [finalArr[24],' ' + finalArr[25], ' ' + finalArr[26]] : 'No Data';
 
     // //alternate3
 
-    // const alternativebuild3 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Information Available';
+    // const alternativebuild3 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Data';
 
-    // const alternativeNotes3 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Information Available';
+    // const alternativeNotes3 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Data';
 
-    // const alternativeArtifacts3 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Information Available';
+    // const alternativeArtifacts3 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Data';
 
     // //alternate4
 
-    // const alternativebuild4 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Information Available';
+    // const alternativebuild4 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Data';
 
-    // const alternativeNotes4 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Information Available';
+    // const alternativeNotes4 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Data';
 
-    // const alternativeArtifacts4 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Information Available';
+    // const alternativeArtifacts4 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Data';
 
     // //alternate5
 
-    // const alternativebuild5 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Information Available';
+    // const alternativebuild5 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Data';
 
-    // const alternativeNotes5 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Information Available';
+    // const alternativeNotes5 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Data';
 
-    // const alternativeArtifacts5 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Information Available';
+    // const alternativeArtifacts5 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Data';
 
 
 
