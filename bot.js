@@ -5,7 +5,7 @@ const express = require('express')();
 const {google} = require('googleapis');
 
 const app = express;
-const { Client, GatewayIntentBits } = require('discord.js');
+const { GatewayIntentBits } = require('discord.js');
 const client = new Discord.Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -22,7 +22,7 @@ const client = new Discord.Client({
 
 // different data comps: peira-hwayoung-arbiter vildred, 
 
-let chars = ['Adventurer Ras', 'Alencia', 'Apocalypse Ravi', 'Choux', 'Rimuru', 'Spirit Eye Celine', 'Archdemons Shadow', 'Belian', 'Rem', 'Remnant', 'Violet', 'Maid Chloe', 'Hwayoung', 'Edward Elric', 'Arbiter Vildred', 'Cidd', 'Ran', 'Peira', 'Summertime', 'Iseria', 'Kawerik', 'Mercedes', 'Closer Charles', 'Eda', 'Pavel', 'Landy', 'Lilias', 'Senya', 'Sylvian Sage Vivian', 'Conqueror Lilias', 'Celine', 'Fallen Cecilia', 'Violet', 'Holiday Yufine', 'Krau', 'Ruele of Light', 'Specter of Tenebria', 'Mort', 'Kise', 'Judge Kise', 'Operator Sigret', 'Kayron', 'Aria', 'Troublemaker Crozet', 'Ravi','Fairytale Tenebria', 'Apo', "archdemon's shadow"];
+let chars = ['Adventurer Ras', 'Alencia', 'Apocalypse Ravi', 'Choux', 'Rimuru', 'Spirit Eye Celine', 'Archdemons Shadow', 'Belian', 'Rem', 'Remnant', 'Violet', 'Maid Chloe', 'Hwayoung', 'Edward Elric', 'Arbiter Vildred', 'Cidd', 'Ran', 'Peira', 'Summertime', 'Iseria', 'Kawerik', 'Mercedes', 'Closer Charles', 'Eda', 'Pavel', 'Landy', 'Lilias', 'Senya', 'Sylvian Sage Vivian', 'Conqueror Lilias', 'Celine', 'Fallen Cecilia', 'Violet', 'Holiday Yufine', 'Krau', 'Ruele of Light', 'Specter of Tenebria', 'Mort', 'Kise', 'Judge Kise', 'Operator Sigret', 'Kayron', 'Aria', 'Troublemaker Crozet', 'Ravi','Fairytale Tenebria', 'Apo', "Archdemon's Shadow"];
 
 // setting dictionary/object for chars array to match with user input
 const setDict = new Set ();
@@ -65,82 +65,68 @@ client.on('messageCreate', async (message) => {
     return o.toLowerCase();
   });
 
-  let f = lowercasedMsg.map(x => {
-    console.log(x);
+  const finalDiscordMsg = lowercasedMsg.map(x => {
     return x;
   });
 
 
-if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
+  if (setDict.has(finalDiscordMsg[0]) && setDict.has(finalDiscordMsg[1]) && setDict.has(finalDiscordMsg[2])) {
 
-  // breaking down discord message to send to google sheets
-  let arr = [];
-  const premessage = message.content.split('-');
-  arr.push(premessage);
+    // breaking down discord message to send to google sheets
+    let arr = [];
+    const premessage = message.content.split('-');
+    arr.push(premessage);
 
-  // capitalizing first letter and spacing format for consistent embed title
-  const embedTitle = premessage.map(x => {
-    return ' ' + x.charAt(0).toUpperCase() + x.slice(1).toLowerCase();   
-  })
+    // capitalizing first letter and spacing format for consistent embed title
+    const embedTitle = premessage.map(x => {
+      return ' ' + x.charAt(0).toUpperCase() + x.slice(1).toLowerCase();
+    })
 
-  // add values into cells
-  const getRows = googleSheets.spreadsheets.values.update({
-    auth,
-    spreadsheetId,
-    range: "Comp Search!B6:D6",
-    valueInputOption: "USER_ENTERED",
-    resource: {
-      values: arr
-    }
-  });
+    // add values into cells
+    const getRows = googleSheets.spreadsheets.values.update({
+      auth,
+      spreadsheetId,
+      range: "Comp Search!B6:D6",
+      valueInputOption: "USER_ENTERED",
+      resource: {
+        values: arr
+      }
+    });
 
-  const metaData = await googleSheets.spreadsheets.get({
-    auth,
-    spreadsheetId
-  });
+    const metaData = await googleSheets.spreadsheets.get({
+      auth,
+      spreadsheetId
+    });
 
-  const readData = await googleSheets.spreadsheets.values.get({
-    auth, //auth object
-    spreadsheetId, // spreadsheet id
-    range: "Comp Search!B9:L18", //range of cells to read from.
-  });
+    const readData = await googleSheets.spreadsheets.values.get({
+      auth, // auth object
+      spreadsheetId, // spreadsheet id
+      range: "Comp Search!B9:L18", //range of cells to read from.
+    });
 
-  // reading data in certain cells, pushing values in array, referencing 2d array for object/dictionary for consistent reference
+    // reading data in certain cells, pushing values in array, referencing 2d array for object/dictionary for consistent reference
 
-  let sheetsData = readData.data.values;
-  let finalArr = [];
-  let dataObj = {};
+    let sheetsData = readData.data.values;
+    let finalArr = [];
+    let dataObj = {};
 
-  sheetsData.map((x) => {
-    finalArr.push(x);
-  });
+    sheetsData.map((x) => {
+      finalArr.push(x);
+    });
 
-  console.log('map1-------', finalArr);
-
-  dataObj.units = finalArr[2];
-  dataObj.artifacts = finalArr[5];
-  dataObj.notes = finalArr[9];
-
-  console.log('data------', dataObj);
-  console.log('datalength------', dataObj.units.length);
-
-
-  // if google sheets does not populate data, return
-
-  // if (finalArr.includes('#N/A')) {
-  //   message.channel.send('No build data available for this team');
-  //   return;
-  // }
+    dataObj.units = finalArr[2];
+    dataObj.artifacts = finalArr[5];
+    dataObj.notes = finalArr[9];
 
     // ** variables for cell positions on Google Sheet
 
     // recommended
 
-  const recommendedBuild = dataObj.units[0] + ',' + ' ' + dataObj.units[1] + ',' + ' ' + dataObj.units[2];
+    const recommendedBuild = dataObj.units[0] + ',' + ' ' + dataObj.units[1] + ',' + ' ' + dataObj.units[2];
 
-  const recommendedArtifacts = dataObj.artifacts[0] + ',' + ' ' + dataObj.artifacts[1] + ',' + ' ' + dataObj.artifacts[2];
+    const recommendedArtifacts = dataObj.artifacts[0] + ',' + ' ' + dataObj.artifacts[1] + ',' + ' ' + dataObj.artifacts[2];
 
-  const recommendedNotes = dataObj.notes != undefined && dataObj.notes[0] != '' ? dataObj.notes[0] : 'No Data';
+    const recommendedNotes = dataObj.notes != undefined && dataObj.notes[0] != '' ? dataObj.notes[0] : 'No Data';
 
 
 
@@ -162,6 +148,7 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
     const alternativeNotes2 = dataObj.notes != undefined && dataObj.notes.length >= 9 ? dataObj.notes[8] : 'No Data';
 
     //---------------------------------------------
+    
     // //alternate3
 
     // const alternativebuild3 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Data';
@@ -186,24 +173,31 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
 
     // const alternativeArtifacts5 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Data';
 
-
+    //---------------------------------------------
 
     //getting username tag for embed
     let dev = message.member.user.tag;
 
-    const embed = new EmbedBuilder().setTitle('Enemy Defense' + ':' + embedTitle).setDescription('The offense below is safer than condom with a man').setTimestamp().setThumbnail('https://qtoptens.com/wp-content/uploads/2021/08/Celestial_Mercedes.png.webp').addFields(
-      //recommended
+    const embed = new EmbedBuilder()
+    .setTitle('Enemy Defense' + ':' + embedTitle)
+    .setDescription('The offense below is safer than condom with a man')
+    .setTimestamp()
+    .setThumbnail('https://qtoptens.com/wp-content/uploads/2021/08/Celestial_Mercedes.png.webp')
+    .setColor('#FFC933')
+    .addFields(
+      // recommended
       { name: 'Recommended Offense', value: `${recommendedBuild}`, inline: true},
-      { name: 'Recommended Artifacts', value: `${recommendedArtifacts}`, inline: false },
+      { name: 'Recommended Artifacts', value: `${recommendedArtifacts}`, inline: true },
       { name: 'Notes: Recommended', value: `${recommendedNotes}`, inline: false },
-      //alternate1
-      { name: 'Alternative 1 Offense', value: `${alternativeBuild1}`, inline: false },
-      { name: 'Alternate1 Artifacts', value: `${alternativeArtifacts1}`, inline: false },
+      // alternate1
+      { name: 'Alternative 1 Offense', value: `${alternativeBuild1}`, inline: true },
+      { name: 'Alternate1 Artifacts', value: `${alternativeArtifacts1}`, inline: true },
       { name: 'Notes: Alternative 1', value: `${alternativeNotes1}`, inline: false },
-      // //alternate2
-      { name: 'Alternative 2 Offense', value: `${alternativeBuild2}`, inline: false },
-      { name: 'Alternate2 Artifacts', value: `${alternativeArtifacts2}`, inline: false },
+      // alternate2
+      { name: 'Alternative 2 Offense', value: `${alternativeBuild2}`, inline: true },
+      { name: 'Alternate2 Artifacts', value: `${alternativeArtifacts2}`, inline: true },
       { name: 'Notes: Alternative 2', value: `${alternativeNotes2}`, inline: false },
+      //**Extra altneratives if needed -------------------*/
       //alternate3
       // { name: 'Alternative 3 Offense', value: `${alternativebuild3}`, inline: false },
       // { name: 'Notes: Alternative 3', value: `${alternativeNotes3}`, inline: false },
@@ -216,13 +210,14 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
       // { name: 'Alternative 5 Offense', value: `${alternativebuild5}`, inline: false },
       // { name: 'Notes: Alternative 5', value: `${alternativeNotes5}`, inline: false },
       // { name: 'Alternate5 Artifacts', value: `${alternativeArtifacts5}`, inline: false },
+      //**------------------------------------------------ */
       ).setFooter({
         text: `Command Requested by: ${dev}`,
         iconURL: message.author.displayAvatarURL(),
       });
 
     message.channel.send({embeds: [embed]});
-  } else if (m.length === 3) {
+  } else if (lowercasedMsg.length === 3) {
     message.channel.send('No Build Available');
   };
 
