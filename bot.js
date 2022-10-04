@@ -20,7 +20,9 @@ const client = new Discord.Client({
   ]
 })
 
-let chars = ['Adventurer Ras', 'Alencia', 'Apocalypse Ravi', 'Choux', 'Rimuru', 'Spirit Eye Celine', 'Archdemons Shadow', 'Belian', 'Rem', 'Remnant', 'Violet', 'Maid Chloe', 'Hwayoung', 'Edward Elric', 'Arbiter Vildred', 'Cidd', 'Ran', 'Peira', 'Summertime', 'Iseria', 'Kawerik', 'Mercedes', 'Closer Charles', 'Eda', 'Pavel', 'Landy', 'Lilias', 'Senya', 'Sylvian Sage Vivian', 'Conqueror Lilias', 'Celine', 'Fallen Cecilia', 'Violet', 'Holiday Yufine', 'Krau', 'Ruele of Light', 'Specter of Tenebria', 'Mort', 'Kise', 'Judge Kise', 'Operator Sigret', 'Kayron', 'Aria', 'Troublemaker Crozet', 'Ravi','Fairytale Tenebria', 'Apo'];
+// different data comps: peira-hwayoung-arbiter vildred, 
+
+let chars = ['Adventurer Ras', 'Alencia', 'Apocalypse Ravi', 'Choux', 'Rimuru', 'Spirit Eye Celine', 'Archdemons Shadow', 'Belian', 'Rem', 'Remnant', 'Violet', 'Maid Chloe', 'Hwayoung', 'Edward Elric', 'Arbiter Vildred', 'Cidd', 'Ran', 'Peira', 'Summertime', 'Iseria', 'Kawerik', 'Mercedes', 'Closer Charles', 'Eda', 'Pavel', 'Landy', 'Lilias', 'Senya', 'Sylvian Sage Vivian', 'Conqueror Lilias', 'Celine', 'Fallen Cecilia', 'Violet', 'Holiday Yufine', 'Krau', 'Ruele of Light', 'Specter of Tenebria', 'Mort', 'Kise', 'Judge Kise', 'Operator Sigret', 'Kayron', 'Aria', 'Troublemaker Crozet', 'Ravi','Fairytale Tenebria', 'Apo', "archdemon's shadow"];
 
 // setting dictionary/object for chars array to match with user input
 const setDict = new Set ();
@@ -29,25 +31,23 @@ for (item of chars) {
   setDict.add(finalItem);
 };
 
-  const auth = new google.auth.GoogleAuth({
-    keyFile: "credentials.json",
-    scopes: "https://www.googleapis.com/auth/spreadsheets"
-  });
-
-  //Create client instance for auth
-
-  const clients = auth.getClient();
-
-  //Instance of Google Sheets API
-
-  const googleSheets = google.sheets({version: "v4", auth: clients });
-
-  
-  const spreadsheetId = "1c6TyHAnRHY0o4r823RFtTzkZDdU9aGx1bBAGZZibn-U";
+const auth = new google.auth.GoogleAuth({
+  keyFile: "credentials.json",
+  scopes: "https://www.googleapis.com/auth/spreadsheets"
+});
 
 
-// bot is ready 
+//Create client instance for auth
+const clients = auth.getClient();
 
+
+//Instance of Google Sheets API
+const googleSheets = google.sheets({version: "v4", auth: clients });
+ 
+const spreadsheetId = "1c6TyHAnRHY0o4r823RFtTzkZDdU9aGx1bBAGZZibn-U";
+
+
+// bot is ready and logged in
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
@@ -56,22 +56,20 @@ client.on("ready", () => {
 // using message parameter in messageCreate to receive discord messages
 client.on('messageCreate', async (message) => {
 
+  //if bot repeats message, return
   if (message.author.bot) return;
 
-  let n = message.content.split('-');
-  const m = n.map(o => {
+  //spliting message from discord user from dash and making sure it is always lowercase
+  let untouchedMsg = message.content.split('-');
+  const lowercasedMsg = untouchedMsg.map(o => {
     return o.toLowerCase();
   });
-  let f = m.map(x => {
+
+  let f = lowercasedMsg.map(x => {
+    console.log(x);
     return x;
   });
 
-  // if (m.every(setDict.has)) {
-  //   m + '1';
-  //   console.log(m);
-  // }
-
-  
 
 if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
 
@@ -142,7 +140,8 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
 
   const recommendedArtifacts = dataObj.artifacts[0] + ',' + ' ' + dataObj.artifacts[1] + ',' + ' ' + dataObj.artifacts[2];
 
-  const recommendedNotes = dataObj.notes[0];
+  const recommendedNotes = dataObj.notes != undefined && dataObj.notes[0] != '' ? dataObj.notes[0] : 'No Data';
+
 
 
     // // alternate1
@@ -151,7 +150,7 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
 
     const alternativeArtifacts1 = dataObj.artifacts.length >= 7 ? dataObj.artifacts[4] + ',' + ' ' + dataObj.artifacts[5] + ',' + ' ' + dataObj.artifacts[6] : 'No Data';
 
-    const alternativeNotes1 =  dataObj.notes.length >= 5 ? dataObj.notes[4] : 'No Data';
+    const alternativeNotes1 =  dataObj.notes != undefined && dataObj.notes.length >= 5 ? dataObj.notes[4] : 'No Data';
 
 
     // //alternate2
@@ -160,7 +159,7 @@ if (setDict.has(f[0]) && setDict.has(f[1]) && setDict.has(f[2])) {
     
     const alternativeArtifacts2 = dataObj.artifacts.length >= 11 ? dataObj.artifacts[4] + ',' + ' ' + dataObj.artifacts[5] + ',' + ' ' + dataObj.artifacts[6] : 'No Data';
 
-    const alternativeNotes2 = dataObj.notes.length >= 9 ? dataObj.notes[8] : 'No Data';
+    const alternativeNotes2 = dataObj.notes != undefined && dataObj.notes.length >= 9 ? dataObj.notes[8] : 'No Data';
 
     //---------------------------------------------
     // //alternate3
