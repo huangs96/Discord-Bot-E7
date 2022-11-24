@@ -3,7 +3,7 @@ This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API 
 
 ## Getting Started
 1. In order to use this discord bot, you must enter your corresponding credentials for both the Discord API and Google Sheets API.
-2. Start the bot `node bot.js` in your terminal. 
+2. Start the bot using `node bot.js` in your terminal. 
 3. Once the bot has logged in (e.g. Bot #1234 is ready!), the discord server will listen to three names that 
 4. The three inputs will populate into the Google Sheet and return back data. In this instance, I have connected it to a Google Sheets that populates Epic 7 data.
 5. Data is sent into the discord channel via embed. Screenshots below.
