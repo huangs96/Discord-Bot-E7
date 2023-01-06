@@ -85,9 +85,9 @@ client.on('messageCreate', async (message) => {
     });
 
     const readData = await googleSheets.spreadsheets.values.get({
-      auth, // auth object
-      spreadsheetId, // spreadsheet id
-      range: "Comp Search!B9:L18", //range of cells to read from.
+      auth, 
+      spreadsheetId, 
+      range: "Comp Search!B9:L18", 
     });
 
     // reading data in certain cells, pushing values in array, referencing 2d array for object/dictionary for consistent reference
