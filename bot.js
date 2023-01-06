@@ -3,7 +3,6 @@ const {EmbedBuilder} = require("discord.js");
 const config = require('./config.json');
 const express = require('express')();
 const {google} = require('googleapis');
-
 const app = express;
 const { GatewayIntentBits } = require('discord.js');
 const client = new Discord.Client({
@@ -18,13 +17,10 @@ const client = new Discord.Client({
     'CHANNEL',
     'REACTIONS'
   ]
-})
-
-// different data comps: peira-hwayoung-arbiter vildred, 
+});
 
 let chars = ['Adventurer Ras', 'Alencia', 'Apocalypse Ravi', 'Choux', 'Rimuru', 'Spirit Eye Celine', 'Archdemons Shadow', 'Belian', 'Rem', 'Remnant', 'Violet', 'Maid Chloe', 'Hwayoung', 'Edward Elric', 'Arbiter Vildred', 'Cidd', 'Ran', 'Peira', 'Summertime', 'Iseria', 'Kawerik', 'Mercedes', 'Closer Charles', 'Eda', 'Pavel', 'Landy', 'Lilias', 'Senya', 'Sylvian Sage Vivian', 'Conqueror Lilias', 'Celine', 'Fallen Cecilia', 'Violet', 'Holiday Yufine', 'Krau', 'Ruele of Light', 'Specter of Tenebria', 'Mort', 'Kise', 'Judge Kise', 'Operator Sigret', 'Kayron', 'Aria', 'Troublemaker Crozet', 'Ravi','Fairytale Tenebria', 'Apo', "Archdemon's Shadow"];
 
-// setting dictionary/object for chars array to match with user input
 const setDict = new Set ();
 for (item of chars) {
   let finalItem = item.toLowerCase();
@@ -36,18 +32,10 @@ const auth = new google.auth.GoogleAuth({
   scopes: "https://www.googleapis.com/auth/spreadsheets"
 });
 
-
-//Create client instance for auth
 const clients = auth.getClient();
-
-
-//Instance of Google Sheets API
 const googleSheets = google.sheets({version: "v4", auth: clients });
- 
 const spreadsheetId = "1c6TyHAnRHY0o4r823RFtTzkZDdU9aGx1bBAGZZibn-U";
 
-
-// bot is ready and logged in
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
@@ -55,8 +43,6 @@ client.on("ready", () => {
 
 // using message parameter in messageCreate to receive discord messages
 client.on('messageCreate', async (message) => {
-
-  //if bot repeats message, return
   if (message.author.bot) return;
 
   //spliting message from discord user from dash and making sure it is always lowercase
@@ -80,7 +66,7 @@ client.on('messageCreate', async (message) => {
     // capitalizing first letter and spacing format for consistent embed title
     const embedTitle = premessage.map(x => {
       return ' ' + x.charAt(0).toUpperCase() + x.slice(1).toLowerCase();
-    })
+    });
 
     // add values into cells
     const getRows = googleSheets.spreadsheets.values.update({
@@ -105,7 +91,6 @@ client.on('messageCreate', async (message) => {
     });
 
     // reading data in certain cells, pushing values in array, referencing 2d array for object/dictionary for consistent reference
-
     let sheetsData = readData.data.values;
     let finalArr = [];
     let dataObj = {};
@@ -118,62 +103,23 @@ client.on('messageCreate', async (message) => {
     dataObj.artifacts = finalArr[5];
     dataObj.notes = finalArr[9];
 
-    // ** variables for cell positions on Google Sheet
-
     // recommended
-
     const recommendedBuild = dataObj.units[0] + ',' + ' ' + dataObj.units[1] + ',' + ' ' + dataObj.units[2];
-
     const recommendedArtifacts = dataObj.artifacts[0] + ',' + ' ' + dataObj.artifacts[1] + ',' + ' ' + dataObj.artifacts[2];
-
     const recommendedNotes = dataObj.notes != undefined && dataObj.notes[0] != '' ? dataObj.notes[0] : 'No Data';
 
 
 
-    // // alternate1
-
+    // alternate1
     const alternativeBuild1 = dataObj.units.length >= 7 ? dataObj.units[4] + ',' + ' ' + dataObj.units[5] + ',' + ' ' + dataObj.units[6] : 'No Data';
-
     const alternativeArtifacts1 = dataObj.artifacts.length >= 7 ? dataObj.artifacts[4] + ',' + ' ' + dataObj.artifacts[5] + ',' + ' ' + dataObj.artifacts[6] : 'No Data';
-
     const alternativeNotes1 =  dataObj.notes != undefined && dataObj.notes.length >= 5 ? dataObj.notes[4] : 'No Data';
 
 
-    // //alternate2
-
+    //alternate2
     const alternativeBuild2 = dataObj.units.length >= 11 ? dataObj.units[8] + ',' + ' ' + dataObj.units[9] + ',' + ' ' + dataObj.units[10] : 'No Data';
-    
     const alternativeArtifacts2 = dataObj.artifacts.length >= 11 ? dataObj.artifacts[4] + ',' + ' ' + dataObj.artifacts[5] + ',' + ' ' + dataObj.artifacts[6] : 'No Data';
-
     const alternativeNotes2 = dataObj.notes != undefined && dataObj.notes.length >= 9 ? dataObj.notes[8] : 'No Data';
-
-    //---------------------------------------------
-    
-    // //alternate3
-
-    // const alternativebuild3 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Data';
-
-    // const alternativeNotes3 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Data';
-
-    // const alternativeArtifacts3 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Data';
-
-    // //alternate4
-
-    // const alternativebuild4 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Data';
-
-    // const alternativeNotes4 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Data';
-
-    // const alternativeArtifacts4 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Data';
-
-    // //alternate5
-
-    // const alternativebuild5 = message || message !== undefined || message !== '' ? [finalArr[17],' ' + finalArr[18], ' ' + finalArr[19]] : 'No Data';
-
-    // const alternativeNotes5 = message || message !== undefined || message !== '' ? [finalArr[0]] : 'No Data';
-
-    // const alternativeArtifacts5 = message || message !== undefined || message !== '' ? [finalArr[20],' ' + finalArr[21], ' ' + finalArr[22]] : 'No Data';
-
-    //---------------------------------------------
 
     //getting username tag for embed
     let dev = message.member.user.tag;
@@ -197,21 +143,7 @@ client.on('messageCreate', async (message) => {
       { name: 'Alternative 2 Offense', value: `${alternativeBuild2}`, inline: true },
       { name: 'Alternate2 Artifacts', value: `${alternativeArtifacts2}`, inline: true },
       { name: 'Notes: Alternative 2', value: `${alternativeNotes2}`, inline: false },
-      //**Extra altneratives if needed -------------------*/
-      //alternate3
-      // { name: 'Alternative 3 Offense', value: `${alternativebuild3}`, inline: false },
-      // { name: 'Notes: Alternative 3', value: `${alternativeNotes3}`, inline: false },
-      // { name: 'Alternate3 Artifacts', value: `${alternativeArtifacts3}`, inline: false },
-      // //alternate4
-      // { name: 'Alternative 4 Offense', value: `${alternativebuild4}`, inline: false },
-      // { name: 'Notes: Alternative 4', value: `${alternativeNotes4}`, inline: false },
-      // { name: 'Alternate4 Artifacts', value: `${alternativeArtifacts4}`, inline: false },
-      // //alternate5
-      // { name: 'Alternative 5 Offense', value: `${alternativebuild5}`, inline: false },
-      // { name: 'Notes: Alternative 5', value: `${alternativeNotes5}`, inline: false },
-      // { name: 'Alternate5 Artifacts', value: `${alternativeArtifacts5}`, inline: false },
-      //**------------------------------------------------ */
-      ).setFooter({
+    ).setFooter({
         text: `Command Requested by: ${dev}`,
         iconURL: message.author.displayAvatarURL(),
       });
