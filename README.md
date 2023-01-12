@@ -14,8 +14,7 @@ This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API 
 2. Inputs will be populated in the google sheet.
 ![image](https://user-images.githubusercontent.com/99042142/203719623-66c4b43a-5edb-42f8-a87c-22f7b35f9e31.png)
 3. Data populated from Google Sheets will be put into an embed and sent to discord through discord API.
-4. ![image](![image](https://user-images.githubusercontent.com/99042142/211983160-22373595-3cf8-44c5-aa34-72b7c9f74a8b.png)
-)
+![image](https://user-images.githubusercontent.com/99042142/211983322-9561c0b8-a0a2-4f98-aec2-a39ed0a3b87c.png)
 ![image](https://user-images.githubusercontent.com/99042142/203719770-e9fc29f2-4c17-494d-adab-8cb9c53ca107.png)
 
 
