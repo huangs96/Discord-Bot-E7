@@ -1,4 +1,4 @@
-const ProtectedScope = require('/home/runner/Discord-Bot-E7/ClassExtensions/ProtectedScope.js');
+const ProtectedScope = require('../classExtensions/ProtectedScope');
 
 const ClassWithImmutablePublicAttr = (() => {
   const sharedProtected = ProtectedScope();

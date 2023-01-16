@@ -1,6 +1,6 @@
-const ClassWithImmutablePublicAttr = require('/home/runner/Discord-Bot-E7/BaseClasses/ClassWithImmutablePublicAttr.js');
-const ProtectedScope = require('/home/runner/Discord-Bot-E7/ClassExtensions/ProtectedScope.js');
-const sheets = require('/home/runner/Discord-Bot-E7/Google/GoogleSheet.js');
+const ClassWithImmutablePublicAttr = require('../BaseClasses/ClassWithImmutablePublicAttr');
+const ProtectedScope = require('../classExtensions/ProtectedScope');
+const sheets = require('../GoogleAuth/GoogleSheet');
 
 const googleSheets = new sheets(process.env.vhelpSheet);
 

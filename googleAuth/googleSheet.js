@@ -1,6 +1,6 @@
-const googleAuth = require('./GoogleAuthSingleton.js');
-const ClassWithImmutablePublicAttr = require('/home/runner/Discord-Bot-E7/BaseClasses/ClassWithImmutablePublicAttr.js');
-const ProtectedScope = require('/home/runner/Discord-Bot-E7/ClassExtensions/ProtectedScope.js');
+const googleAuth = require('./GoogleAuthSingleton');
+const ClassWithImmutablePublicAttr = require('../BaseClasses/ClassWithImmutablePublicAttr');
+const ProtectedScope = require('../classExtensions/ProtectedScope');
 
 const {auth, sheet} = googleAuth;
 
