@@ -1,8 +1,9 @@
 const ClassWithImmutablePublicAttr = require('../BaseClasses/ClassWithImmutablePublicAttr');
 const ProtectedScope = require('../classExtensions/ProtectedScope');
 const sheets = require('../GoogleAuth/GoogleSheet');
+require('dotenv').config();
 
-const googleSheets = new sheets(process.env.vhelpSheet);
+const googleSheets = new sheets(process.env.e7sheet);
 
 const UNIT_NAME_START = 0;
 const BUILD_DATA_START = 5;
@@ -11,7 +12,7 @@ const LINK_LENGTH = 3;
 const NO_BUILD_FOUND_STRING = '#N/A';
 const NO_DATA_STRING = 'No Data';
 const CORRECT_NUM_UNITS = 3;
-const SHEET_LINK = 'https://docs.google.com/spreadsheets/d/1c6TyHAnRHY0o4r823RFtTzkZDdU9aGx1bBAGZZibn-U/edit#gid=0';
+const SHEET_LINK = 'https://docs.google.com/spreadsheets/d/1McIkBIxs1pZC626ARCr1KCH0pRKz2MPK28OhhIoQ850/edit#gid=0';
 const NOT_ENOUGH_UNITS_STRING = "You didn't provide enough units to search.";
 const TOO_MANY_UNITS_STRING = 'You inputed too many units.';
 
@@ -96,7 +97,7 @@ const Vhelp = (() => {
           { name: 'Recommended Unit Stat + Link for Additional Stats', value: SHEET_LINK, inline: false},);
           
         embed.setFooter({
-          text: `Vhelp Requested by: ${userTag}`,
+          text: `Requested by: ${userTag}`,
           iconURL: this.#message.author.displayAvatarURL(),
         });
         
@@ -151,11 +152,11 @@ const Vhelp = (() => {
     }
   
     #denyVcroxVhelp() {
-      this.#sendMessage(this.#constants.vcroxDenialResponse);
+      this.#sendMessage(this.#constants.ccDenialResponse);
     }
   
     #directToVhelpCommand() {
-      this.#sendMessage(`My Lord <@${this.#userId}>, please use the !vhelp command.`);
+      this.#sendMessage(`Hey <@${this.#userId}>, please use the !cc command.`);
     }
   
     async #doVhelpCommand(args, userTag, command) {
@@ -222,7 +223,7 @@ const Vhelp = (() => {
         }
         return `${finalString}${index > 0 ? ',' : ''} ${currentString}`;
       }, "");
-      this.#sendMessage(`No my honor! There is no build for: ${output}`);
+      this.#sendMessage(`There is no build for: ${output}`);
 
       const noBuildData = await googleSheets.ReadData('Non-Response Raw Data!A2:A');
       const nextIndex = noBuildData.length + 2;
@@ -263,7 +264,7 @@ const Vhelp = (() => {
           {name: '# | Comps', value: displayString, inline: true},
         )
         .setFooter({
-            text: `Vhelp Requested by: ${userTag}`,
+            text: `Requested by: ${userTag}`,
             iconURL: this.#message.author.displayAvatarURL(),
           });
 
@@ -274,9 +275,9 @@ const Vhelp = (() => {
   
     #getCommands() {
       return [
-        {name: '!Vhelp', text: this.#constants.vhelpText},
-        {name: '!Vpeasant', text: this.#constants.vPeasantText},
-        {name: '!VNoBuild', text: this.#constants.noBuildCommandText}
+        {name: '!cchelp', text: this.#constants.vhelpText},
+        {name: '!ccpeasant', text: this.#constants.vPeasantText},
+        {name: '!ccNoBuild', text: this.#constants.noBuildCommandText}
       ];
     }
   

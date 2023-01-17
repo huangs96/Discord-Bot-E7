@@ -18,12 +18,12 @@ const Constants = (() => {
 
       //----------COMMANDS-------------
       set('prefix', '!');
-      set('vhelpCommand', 'vhelp');
-      set('vhelpText', `This is only usable by lords. Does a look up against sheet created by Aesthetica and Vik to suggest you some comps. \n\nExample command: !Vhelp peira, hwa, violet`);
+      set('vhelpCommand', 'cc');
+      set('cchelpText', `Input a command to get recommendations on your build.\n\nExample command: !cc peira, hwa, violet`);
       set('vPeasant', 'vpeasant');
       set('vPeasantText', `This is used by the peasants. Does a look up against Aesthetica's sheet to suggest you some comps. \n\nExample command: !Vpeasant peira, hwa, violet`);
       set('commands', 'vcommands');
-      set('checkWinrate', 'vwinrate');
+      set('checkWinrate', 'ccwinrate');
       set('checkWinrateText', 'Checks your GVG Stats for the season.');
       set('noBuildCommand', `vnobuild`);
       set('noBuildCommandText', `Gets the list of requested comps that we didn't have a build for.`);
@@ -37,26 +37,14 @@ const Constants = (() => {
 
       //----------RESPONSES-------------
       set('aestheticaResponse', 'Please use my comp, my ASIAN QUEEN!!!! Step on me! *coom*');
-      set('vcroxDenialResponse', 'Find a guild member to sharingan, peasant.');
+      set('ccDenialResponse', 'Find a guild member to sharingan, peasant.');
       set('vcroxDenialResponseGif', 'https://cdn.discordapp.com/attachments/963999915627913226/1027797143932645436/854092979358793759.gif');
 
       //----------EMBED IMAGE-------------
       set('embedImage', 'https://cdn.discordapp.com/attachments/944305644478038127/1027775971409006683/vcrox-nothingcringe.png');
 
       set('vcroxSayings', [
-        "This comp will win FOR THE ASIAN PUSSY PARADOX!",
-        "Use this comp like the pillow, and become a man!",
-        "WHAT ARE YOU DOING?! YOU ARE MY WIFE!",
-        "I'm scared that if I try it and like it, I become gay.",
-        "The offense below is safer than condom with a woman",
-        "This offense has stamina, it is a bit black.",
-        "Don't forget, this offense has SUPERIOR sperm quality",
-        "Fight for the Parabellum Father! For the sperm quality!",
-        "Use this comp and the enemy won't be able to hold doggy.",
-        "Are you a girl? Nothing cringe btw.",
-        "Take this 'couching' and win!",
-        "DESTROY AAAAAAAALL",
-        "This comp is an amazing breed",
+        "Use this comp."
       ]);
 
       set('nerfedUnits', ['Hwayoung']);
