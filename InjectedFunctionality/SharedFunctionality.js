@@ -25,7 +25,7 @@ const SharedFunctionality = (() => {
     
       if(command == this.#constants.vhelpCommand) return `<@${userId}> here is your cc request.`;
     
-      return `My Lord <@${userId}> here is your information.`;
+      return `<@${userId}> here is your information.`;
     }
 
     #isOfficer = (message) => {      

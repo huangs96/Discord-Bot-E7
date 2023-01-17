@@ -20,16 +20,16 @@ const Constants = (() => {
       set('prefix', '!');
       set('vhelpCommand', 'cc');
       set('cchelpText', `Input a command to get recommendations on your build.\n\nExample command: !cc peira, hwa, violet`);
-      set('vPeasant', 'vpeasant');
+      // set('ccInfo', 'hello');
       set('vPeasantText', `This is used by the peasants. Does a look up against Aesthetica's sheet to suggest you some comps. \n\nExample command: !Vpeasant peira, hwa, violet`);
-      set('commands', 'vcommands');
+      set('commands', 'commands');
       set('checkWinrate', 'ccwinrate');
       set('checkWinrateText', 'Checks your GVG Stats for the season.');
-      set('noBuildCommand', `vnobuild`);
+      set('noBuildCommand', `ccnobuild`);
       set('noBuildCommandText', `Gets the list of requested comps that we didn't have a build for.`);
 
       //----------USERS-------------
-      set('vcroxId', 'Vcrox#5681');
+      set('vikChun', 'vikchun#8600');
       set('aestheticaId', 'Aesthetica#4825');
       set('officerRoles', ['Parabellum Officer'
         //, 'Parabellum2 Officer', 'Parabellum3 Officer'
@@ -41,10 +41,11 @@ const Constants = (() => {
       set('vcroxDenialResponseGif', 'https://cdn.discordapp.com/attachments/963999915627913226/1027797143932645436/854092979358793759.gif');
 
       //----------EMBED IMAGE-------------
-      set('embedImage', 'https://cdn.discordapp.com/attachments/944305644478038127/1027775971409006683/vcrox-nothingcringe.png');
+      set('embedImage', 'https://media.discordapp.net/attachments/1064657988855537675/1064792653784424468/image.png');
 
-      set('vcroxSayings', [
-        "Use this comp."
+      set('sayings', [
+        "This the comp.",
+        "W ONLY."
       ]);
 
       set('nerfedUnits', ['Hwayoung']);

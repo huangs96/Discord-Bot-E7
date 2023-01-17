@@ -38,11 +38,11 @@ const Vhelp = (() => {
 
       const set = sharedProtected(this).DefineImmutablePublic;
 
-      set('doVhelpCommand', this.#doVhelpCommand)
-      set('denyVcroxHelp', this.#denyVcroxVhelp);
-      set('directToVhelpCommand', this.#directToVhelpCommand);
+      set('doHelpCommand', this.#doHelpCommand)
+      set('denyHelp', this.#denyHelp);
+      set('directToHelpCommand', this.#directToHelpCommand);
       set('getCommands', this.#getCommands);
-      set('getNoBuildComps', this.#GetNoBuildComps)
+      set('getNoBuildComps', this.#GetNoBuildComps);
 
       Object.freeze(this);
     }
@@ -64,15 +64,16 @@ const Vhelp = (() => {
       const {EmbedBuilder} = this.#discordFunctionality;
       
       const embed = new EmbedBuilder()
-        .setTitle(`Enemy Defense : ${embedTitle}`)
+        .setTitle(`Enemy Defense: ${embedTitle}`)
         .setURL(channelLink)
-        .setDescription(this.#getVcroxSayings(userTag))
+        .setDescription(this.#getSayings(userTag))
         .setTimestamp()
         .setThumbnail(this.#constants.embedImage)
         .setColor('#FFC933');
   
         //Loops through all comp info and adds fields for them
         builds.forEach((element,index) => {
+          console.log('element for builds', element);
           embed.addFields({name: '\u200B', value: '\u200B',},);
   
           let offenseName = `Alternative ${index} Offense`;
@@ -151,15 +152,15 @@ const Vhelp = (() => {
       }
     }
   
-    #denyVcroxVhelp() {
+    #denyHelp() {
       this.#sendMessage(this.#constants.ccDenialResponse);
     }
   
-    #directToVhelpCommand() {
+    #directToHelpCommand() {
       this.#sendMessage(`Hey <@${this.#userId}>, please use the !cc command.`);
     }
   
-    async #doVhelpCommand(args, userTag, command) {
+    async #doHelpCommand(args, userTag, command) {
       const nickNameDictionary = this.#constants.unitNickNames;
   
       //replaces the user inputed value nicknames with the actual values where applicable
@@ -240,8 +241,12 @@ const Vhelp = (() => {
 
     async #GetNoBuildComps(command, userTag) {
       const noBuildData = await googleSheets.ReadData('Non-Response Report!A3:D');
+      // console.log('nbd', noBuildData);
       const displayString = noBuildData.reduce((finalString, current) => {
         const units = current.slice(0, 3).reduce((finalString, element, index) => {
+          console.log('finalStr', finalString)
+          console.log('finalStr22222', element)
+          console.log('finalStr33333', index)
           return `${finalString}${index > 0 ? ', ' : ''}${element}`;
         }, '');
 
@@ -249,6 +254,7 @@ const Vhelp = (() => {
 
         return `${finalString}${occurrences} | ${units}\n`
       }, '');
+      // console.log('nbd', displayString);
 
       const channelLink = `https://discord.com/channels/${this.#message.guildId}/${this.#message.channelId}`;
 
@@ -275,8 +281,8 @@ const Vhelp = (() => {
   
     #getCommands() {
       return [
-        {name: '!cchelp', text: this.#constants.vhelpText},
-        {name: '!ccpeasant', text: this.#constants.vPeasantText},
+        {name: '!ccHelp', text: this.#constants.cchelpText},
+        // {name: '!ccInfo', text: this.#constants.ccInfo},
         {name: '!ccNoBuild', text: this.#constants.noBuildCommandText}
       ];
     }
@@ -289,11 +295,11 @@ const Vhelp = (() => {
       return `${this.#constants.nerfedUnitDisclaimer} ${nerfedUnits}`;
     }
   
-    #getVcroxSayings(userTag) {
+    #getSayings(userTag) {
       if(userTag == this.#constants.aestheticaId) return this.#constants.aestheticaResponse;
-      const randomInt = Math.floor(Math.random() * (this.#constants.vcroxSayings.length - 1));
+      const randomInt = Math.floor(Math.random() * (this.#constants.sayings.length - 1));
     
-      return this.#constants.vcroxSayings[randomInt];
+      return this.#constants.sayings[randomInt];
     }
   
     #messageNotEnoughUnits() {
