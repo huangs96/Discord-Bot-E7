@@ -93,9 +93,9 @@ const Vhelp = (() => {
           );
         });
         
-        embed.addFields(
-          {name: '\u200B', value: '\u200B',},
-          { name: 'Recommended Unit Stat + Link for Additional Stats', value: SHEET_LINK, inline: false},);
+        // embed.addFields(
+        //   {name: '\u200B', value: '\u200B',},
+        //   { name: 'Recommended Unit Stat + Link for Additional Stats', value: SHEET_LINK, inline: false},);
           
         embed.setFooter({
           text: `Requested by: ${userTag}`,
@@ -241,20 +241,17 @@ const Vhelp = (() => {
 
     async #GetNoBuildComps(command, userTag) {
       const noBuildData = await googleSheets.ReadData('Non-Response Report!A3:D');
-      // console.log('nbd', noBuildData);
       const displayString = noBuildData.reduce((finalString, current) => {
         const units = current.slice(0, 3).reduce((finalString, element, index) => {
-          console.log('finalStr', finalString)
-          console.log('finalStr22222', element)
-          console.log('finalStr33333', index)
           return `${finalString}${index > 0 ? ', ' : ''}${element}`;
         }, '');
 
         const occurrences = current.at(-1);
+        console.log('occ', occurrences);
 
         return `${finalString}${occurrences} | ${units}\n`
       }, '');
-      // console.log('nbd', displayString);
+      console.log('nbd', displayString);
 
       const channelLink = `https://discord.com/channels/${this.#message.guildId}/${this.#message.channelId}`;
 

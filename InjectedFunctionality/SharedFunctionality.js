@@ -23,7 +23,7 @@ const SharedFunctionality = (() => {
     #getPingUserString = (command, userId) => {
       if(command == this.#constants.vPeasant) return `Here is your cc request <@${userId}>`;  
     
-      if(command == this.#constants.vhelpCommand) return `<@${userId}> here is your cc request.`;
+      if(command == this.#constants.vhelpCommand) return `<@${userId}> These are the best options we found to beat this comp!`;
     
       return `<@${userId}> here is your information.`;
     }
