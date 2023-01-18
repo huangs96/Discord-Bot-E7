@@ -115,7 +115,7 @@ const Constants = (() => {
         juggs: 'Judge Kise',
         "fire handguy": 'Kawerik',
         gayron: 'Kayron',
-        "vcrox's daddy": 'Kayron',
+        "vik's daddy": 'Kayron',
         lrk: 'Last Rider Krau',
         lermia: 'Lionheart Cermia',
         lhc: 'Lionheart Cermia',

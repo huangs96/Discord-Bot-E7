@@ -12,7 +12,7 @@ const LINK_LENGTH = 3;
 const NO_BUILD_FOUND_STRING = '#N/A';
 const NO_DATA_STRING = 'No Data';
 const CORRECT_NUM_UNITS = 3;
-const SHEET_LINK = 'https://docs.google.com/spreadsheets/d/1McIkBIxs1pZC626ARCr1KCH0pRKz2MPK28OhhIoQ850/edit#gid=0';
+// const SHEET_LINK = (process.env.sheetlink);
 const NOT_ENOUGH_UNITS_STRING = "You didn't provide enough units to search.";
 const TOO_MANY_UNITS_STRING = 'You inputed too many units.';
 
