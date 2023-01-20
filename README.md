@@ -14,7 +14,7 @@ Commands:
 1. User write "!commands".
 ![image](https://user-images.githubusercontent.com/99042142/213616023-3d634ab9-44f8-4e60-9c7e-fd33583c8ee5.png)
 2. Commands will be returned to user.
-![image](https://user-images.githubusercontent.com/99042142/213616085-edd20fbd-3a9a-4f8f-acf5-7c958f3d3383.png)
+![image](https://user-images.githubusercontent.com/99042142/213616162-2fe95146-31f0-4a52-8559-d0aacb0c0db3.png)
 
 Team Composition Check:
 1. User inputs three names into the discord.
