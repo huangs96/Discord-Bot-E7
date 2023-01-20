@@ -10,7 +10,7 @@ This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API 
 
 ## Screenshots
 
-#### Commands ####:
+#### Commands ####
 1. User writes "!commands".
 ![image](https://user-images.githubusercontent.com/99042142/213616023-3d634ab9-44f8-4e60-9c7e-fd33583c8ee5.png)
 2. Commands will be returned to user.
