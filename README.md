@@ -9,6 +9,14 @@ This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API 
 5. Data is sent into the discord channel via embed. Screenshots below.
 
 ## Screenshots
+
+Commands:
+1. User write "!commands".
+![image](https://user-images.githubusercontent.com/99042142/213616023-3d634ab9-44f8-4e60-9c7e-fd33583c8ee5.png)
+2. Commands will be returned to user.
+![image](https://user-images.githubusercontent.com/99042142/213616085-edd20fbd-3a9a-4f8f-acf5-7c958f3d3383.png)
+
+Team Composition Check:
 1. User inputs three names into the discord.
 ![image](https://user-images.githubusercontent.com/99042142/203718528-1fc4cb0e-6b7f-4c52-a5d5-809bdd76cc6c.png)
 2. Inputs will be populated in the google sheet.
@@ -16,7 +24,6 @@ This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API 
 3. Data populated from Google Sheets will be put into an embed and sent to discord through discord API.
 ![image](https://user-images.githubusercontent.com/99042142/211983322-9561c0b8-a0a2-4f98-aec2-a39ed0a3b87c.png)
 ![image](https://user-images.githubusercontent.com/99042142/203719770-e9fc29f2-4c17-494d-adab-8cb9c53ca107.png)
-
 
 
 
