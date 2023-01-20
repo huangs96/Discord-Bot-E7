@@ -60,7 +60,7 @@ client.on(Events.MessageCreate, async (message) => {
 
   try {
   
-    //Example command: !vhelp peira hwa choux
+    //Example command: !cc peira hwa choux
     const body = message.content.slice(constants.prefix.length);
   
     //Extracts the command immediately after !
@@ -77,27 +77,32 @@ client.on(Events.MessageCreate, async (message) => {
   
     //Creates the necessary classes 
     const neededClasses = createNeededClasses(message, command);
+    console.log('neededClasses', neededClasses);
   
     //Command structure
+    console.log('command', command);
     switch(command) {
   
-      //Vhelp commands
+      //cc commands
       case constants.noBuildCommand:
-      case constants.vPeasant: 
-      case constants.vhelpCommand: {
+      case constants.ccHelpCommand:
+      case constants.ccGC: {
         const vhelp = neededClasses.vhelp;
         
-        if(userTag == constants.vikChun && command == constants.vhelpCommand)  {
+        if(userTag == constants.vikChun && command == constants.ccHelpCommand)  {
           vhelp.denyHelp();
           break;
         }
-        else if (userTag != constants.vikChun && command == constants.vPeasant) {
+        else if (userTag != constants.bullied) {
           vhelp.directToHelpCommand();
           break;
         }
         else if(command == constants.noBuildCommand) {
           vhelp.getNoBuildComps(command, userTag);
           break;
+        }
+        else if(command == constants.ccGC) {
+          vhelp.getGearScore();
         }
         
         await vhelp.doHelpCommand(theRestString, userTag, command);
@@ -164,7 +169,6 @@ const displayCommands = (command, message, userTag, neededClasses) => {
 const createNeededClasses = (message, command) => {
   switch(command) {
     case constants.noBuildCommand:
-    case constants.vPeasant:
     case constants.vhelpCommand: {
       return {
         vhelp: FunctionalityManager.GetVhelp(message, SharedFunctionality, constants, getObjectDiscordDependencies('vhelp'))

@@ -43,6 +43,7 @@ const Vhelp = (() => {
       set('directToHelpCommand', this.#directToHelpCommand);
       set('getCommands', this.#getCommands);
       set('getNoBuildComps', this.#GetNoBuildComps);
+      set('ccGearScore', this.#getGearScore);
 
       Object.freeze(this);
     }
@@ -201,16 +202,16 @@ const Vhelp = (() => {
         if(disclaimer) {
           const disclaimerString = this.#getDisclaimerString();
           this.#sendMessage(`${this.#sharedFunctionality.getPingUserString(command, this.#userId)} ${disclaimerString}`);
-        } 
+        }
         else {
           this.#sendMessage(this.#sharedFunctionality.getPingUserString(command, this.#userId));
         }
         
         this.#sendMessage({embeds: [...embeds]});
-      } 
+      }
       else {
         await this.#doNoBuild(theRest, unitNames);
-      } 
+      }
     }
 
     async #doNoBuild(theRest, unitNames) {
@@ -272,11 +273,15 @@ const Vhelp = (() => {
       this.#sendMessage(this.#sharedFunctionality.getPingUserString(command, this.#userId))
       this.#sendMessage({embeds: [embed]});
     }
+
+    async #getGearScore(gearScores) {
+      console.log('gearScore', gearScores);
+    }
   
     #getCommands() {
       return [
         {name: '!ccHelp', text: this.#constants.cchelpText},
-        // {name: '!ccInfo', text: this.#constants.ccInfo},
+        {name: '!ccGC', text: this.#constants.ccGearCheck},
         {name: '!ccNoBuild', text: this.#constants.noBuildCommandText}
       ];
     }

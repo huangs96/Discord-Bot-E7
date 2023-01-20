@@ -18,19 +18,20 @@ const Constants = (() => {
 
       //----------COMMANDS-------------
       set('prefix', '!');
-      set('vhelpCommand', 'cc');
+      set('ccHelpCommand', 'cc');
       set('cchelpText', `Input a command to get recommendations on your build.\n\nExample command: !cc peira, hwa, violet`);
-      // set('ccInfo', 'hello');
-      set('vPeasantText', `This is used by the peasants. Does a look up against Aesthetica's sheet to suggest you some comps. \n\nExample command: !Vpeasant peira, hwa, violet`);
+      set('ccNoob', 'ccnoob')
+      set('ccNoobMsg', `noob looking for solutions again.`);
       set('commands', 'commands');
       set('checkWinrate', 'ccwinrate');
       set('checkWinrateText', 'Checks your GVG Stats for the season.');
       set('noBuildCommand', `ccnobuild`);
       set('noBuildCommandText', `Gets the list of requested comps that we didn't have a build for.`);
-      set('ccGC', 'getGearScore')
+      set('ccGearCheck', 'Check the stats on your gear.')
+      set('ccGC', 'ccGC')
 
       //----------USERS-------------
-      set('vikChun', '');
+      set('bullied', 'dontmessdawg#6813');
       set('aestheticaId', 'Aesthetica#4825');
       set('officerRoles', ['Parabellum Officer'
         //, 'Parabellum2 Officer', 'Parabellum3 Officer'
