@@ -15,6 +15,7 @@ const CORRECT_NUM_UNITS = 3;
 // const SHEET_LINK = (process.env.sheetlink);
 const NOT_ENOUGH_UNITS_STRING = "You didn't provide enough units to search.";
 const TOO_MANY_UNITS_STRING = 'You inputed too many units.';
+const GEAR_DATA_INSUFFICIENT = 'Gear data insufficient - cannot calculate gear score.'
 
 
 const Vhelp = (() => {
@@ -274,8 +275,9 @@ const Vhelp = (() => {
       this.#sendMessage({embeds: [embed]});
     }
 
-    async #getGearScore(gearScores) {
-      console.log('gearScore', gearScores);
+    async #getGearScore() {
+      this.#messageGearInsufficient;
+      return;
     }
   
     #getCommands() {
@@ -307,6 +309,11 @@ const Vhelp = (() => {
   
     #messageTooManyUnits() {
       this.#sendMessage(TOO_MANY_UNITS_STRING);
+    }
+
+    #messageGearInsufficient() {
+      console.log(GEAR_DATA_INSUFFICIENT);
+      this.#sendMessage(GEAR_DATA_INSUFFICIENT);
     }
   
     #sendMessage(messageString) {

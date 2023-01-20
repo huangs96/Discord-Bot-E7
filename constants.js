@@ -28,10 +28,10 @@ const Constants = (() => {
       set('noBuildCommand', `ccnobuild`);
       set('noBuildCommandText', `Gets the list of requested comps that we didn't have a build for.`);
       set('ccGearCheck', 'Check the stats on your gear.')
-      set('ccGC', 'ccGC')
+      set('ccGC', 'ccgc')
 
       //----------USERS-------------
-      set('bullied', 'dontmessdawg#6813');
+      set('bullied', 'vikChun8600');
       set('aestheticaId', 'Aesthetica#4825');
       set('officerRoles', ['Parabellum Officer'
         //, 'Parabellum2 Officer', 'Parabellum3 Officer'

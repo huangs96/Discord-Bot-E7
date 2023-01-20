@@ -77,32 +77,28 @@ client.on(Events.MessageCreate, async (message) => {
   
     //Creates the necessary classes 
     const neededClasses = createNeededClasses(message, command);
-    console.log('neededClasses', neededClasses);
+    // console.log('neededClasses', await neededClasses.vhelp.ccGearScore());
   
     //Command structure
-    console.log('command', command);
+    // console.log('command', command);
     switch(command) {
   
       //cc commands
       case constants.noBuildCommand:
-      case constants.ccHelpCommand:
-      case constants.ccGC: {
+      case constants.ccHelpCommand: {
         const vhelp = neededClasses.vhelp;
         
         if(userTag == constants.vikChun && command == constants.ccHelpCommand)  {
           vhelp.denyHelp();
           break;
         }
-        else if (userTag != constants.bullied) {
+        else if (userTag != constants.bullied && command == constants.ccHelpCommand) {
           vhelp.directToHelpCommand();
           break;
         }
         else if(command == constants.noBuildCommand) {
           vhelp.getNoBuildComps(command, userTag);
           break;
-        }
-        else if(command == constants.ccGC) {
-          vhelp.getGearScore();
         }
         
         await vhelp.doHelpCommand(theRestString, userTag, command);
@@ -119,7 +115,16 @@ client.on(Events.MessageCreate, async (message) => {
   
         break;
       }
-  
+
+      //gear score checker
+      case constants.ccGC: {
+        const vhelp = neededClasses.vhelp;
+
+        if(command == constants.ccGC) {
+          await vhelp.ccGearScore();
+          break;
+        }
+      }
   
       //Other Commands
       case constants.commands: {
