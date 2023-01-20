@@ -275,9 +275,33 @@ const Vhelp = (() => {
       this.#sendMessage({embeds: [embed]});
     }
 
-    async #getGearScore() {
-      this.#messageGearInsufficient;
-      return;
+    async #getGearScore(gearData) {
+      //this function checks if there are repeats of 'c' in command, but will always return true because within GearData, we are receiving 
+      function hasRepeats(str) {
+        return (/([a-z])\1/i).test(str)
+      };
+
+      hasRepeats(gearData);
+
+      if (gearData.includes('cc' && 'cd')) {
+        const splitGearData = gearData.split(',');
+        console.log(/(.).*\1/.test(gearData));
+        // const formula = '(x * 1.6) + y + z + (a4 * 1.14)';
+        const individualGearScores = splitGearData.map(scores => {
+          scores.replace(/\D/g,'');
+          const finalScoreData = parseInt(scores);
+          return finalScoreData;
+        });
+        const score1 = individualGearScores[0] * 1.6;
+        const score2 = individualGearScores[1];
+        const score3 = individualGearScores[2];
+        const score4 = individualGearScores[3] * 1.14;
+        const finalGearScore = score1 + score2 + score3 + score4;
+        this.#sendMessage(`Here is your gear score: ${finalGearScore.toFixed(2)}`);
+      } else {
+        this.#messageGearInsufficient();
+        return;
+      }
     }
   
     #getCommands() {

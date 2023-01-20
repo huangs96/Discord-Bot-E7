@@ -121,7 +121,7 @@ client.on(Events.MessageCreate, async (message) => {
         const vhelp = neededClasses.vhelp;
 
         if(command == constants.ccGC) {
-          await vhelp.ccGearScore();
+          await vhelp.ccGearScore(theRestString);
           break;
         }
       }
