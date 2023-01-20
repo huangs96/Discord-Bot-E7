@@ -1,12 +1,12 @@
 # Discord-Bot-E7
-This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API to help Epic 7 mobile game players to improve their guild war match ups by connecting their discord server with an in-depth Google Sheet.
+This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API to help Epic 7 mobile game players improve their guild war match ups, provide player gear score and winrates, and record team compositions that have no yet been created. The bot functions by connecting their discord server with an in-depth Google Sheet created by one of the players.
 
 ## Getting Started
-1. In order to use this discord bot, you must enter your corresponding credentials for both the Discord API and Google Sheets API.
-2. Start the bot using `node bot.js` in your terminal. Alternatively, you can find hosting for the bot to use it virtually and not on your local machine. The guild that is using this bot is using Replit for hosting.
-3. Once the bot has logged in (e.g. Bot #1234 is ready!), the discord server will listen to three names that 
-4. The three inputs will populate into the Google Sheet and return back data. In this instance, I have connected it to a Google Sheets that populates Epic 7 data.
-5. Data is sent into the discord channel via embed. Screenshots below.
+1. In order to use this discord bot, you must either provide your own discord development and google sheets credentials duplicate/fork this bot, or contact me for permissions to add this bot into your server.
+2. Start the bot using `node bot.js` in your terminal. Alternatively, you can find hosting for the bot to use it virtually and not on your local machine. The guild that is using this bot is using AWS Lambda for hosting.
+3. Once the bot has logged in (e.g. "Status"), the discord server will listen for user inputs.
+4. Based on the user input, it will read or write information from and to the google sheet.
+5. Data is sent into the discord channel via embed. Screenshots and example of commands below.
 
 ## Screenshots
 
