@@ -22,8 +22,8 @@ Team Composition Check:
 2. Inputs will be populated in the google sheet.
 ![image](https://user-images.githubusercontent.com/99042142/203719623-66c4b43a-5edb-42f8-a87c-22f7b35f9e31.png)
 3. Data populated from Google Sheets will be put into an embed and sent to discord through discord API.
-![image](https://user-images.githubusercontent.com/99042142/213616676-4b84d5af-e5e4-4015-86ca-ccf3b609cfcc.png)
-![image](https://user-images.githubusercontent.com/99042142/203719770-e9fc29f2-4c17-494d-adab-8cb9c53ca107.png)
+![image](https://user-images.githubusercontent.com/99042142/213616816-dcb149ba-81e4-4d9b-b0fb-a3c7e4a985b7.png)
+![image](https://user-images.githubusercontent.com/99042142/213616767-a18203df-33c6-4df1-99d9-82a83c4b78dd.png)
 
 
 
