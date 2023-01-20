@@ -25,6 +25,10 @@ Team Composition Check:
 ![image](https://user-images.githubusercontent.com/99042142/213616816-dcb149ba-81e4-4d9b-b0fb-a3c7e4a985b7.png)
 ![image](https://user-images.githubusercontent.com/99042142/213616767-a18203df-33c6-4df1-99d9-82a83c4b78dd.png)
 
+Gear Score Check:
+1. User inputs stats of gear.
+2. Data of total gear score with unique multipliers applied will be returned back to user.
+![image](https://user-images.githubusercontent.com/99042142/213700006-d3a37cd2-4a2b-4cdf-806b-34f9e182e276.png)
 
 
 ## Dependencies
