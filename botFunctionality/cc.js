@@ -275,7 +275,7 @@ const Vhelp = (() => {
       this.#sendMessage({embeds: [embed]});
     }
 
-    async #getGearScore(gearData) {
+    async #getGearScore(gearData, userId) {
       //this function checks if there are repeats of 'c' in command, but will always return true because within GearData, we are receiving 
       function hasRepeats(str) {
         return (/([a-z])\1/i).test(str)
@@ -297,7 +297,17 @@ const Vhelp = (() => {
         const score3 = individualGearScores[2];
         const score4 = individualGearScores[3] * 1.14;
         const finalGearScore = score1 + score2 + score3 + score4;
-        this.#sendMessage(`Here is your gear score: ${finalGearScore.toFixed(2)}`);
+
+        if (finalGearScore < 65) {
+          this.#sendMessage(`Hey <@${this.#userId}> here is your gear score: ${finalGearScore.toFixed(2)} \nWhy are you rolling blue gear?`);
+        } else if (finalGearScore >= 65 && finalGearScore < 69) {
+          this.#sendMessage(`Hey <@${this.#userId}>, here is your gear score: ${finalGearScore.toFixed(2)} \n Maybe usable in PVE?`);
+        } else if (finalGearScore >= 70 && finalGearScore < 74 ) {
+          this.#sendMessage(`Hey <@${this.#userId}>, here is your gear score: ${finalGearScore.toFixed(2)} \nGimme more of this!`);
+        } else {
+          this.#sendMessage(`Hey <@${this.#userId}>, here is your gear score: ${finalGearScore.toFixed(2)} \nCan I have your number?`);
+        }
+
       } else {
         this.#messageGearInsufficient();
         return;
@@ -307,7 +317,7 @@ const Vhelp = (() => {
     #getCommands() {
       return [
         {name: '!ccHelp', text: this.#constants.cchelpText},
-        {name: '!ccGC', text: this.#constants.ccGearCheck},
+        {name: '!ccGS', text: this.#constants.ccGearCheck},
         {name: '!ccNoBuild', text: this.#constants.noBuildCommandText}
       ];
     }

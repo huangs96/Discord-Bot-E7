@@ -20,15 +20,15 @@ const Constants = (() => {
       set('prefix', '!');
       set('ccHelpCommand', 'cc');
       set('cchelpText', `Input a command to get recommendations on your build.\n\nExample command: !cc peira, hwa, violet`);
-      set('ccNoob', 'ccnoob')
+      set('ccNoob', 'ccnoob');
       set('ccNoobMsg', `noob looking for solutions again.`);
       set('commands', 'commands');
       set('checkWinrate', 'ccwinrate');
       set('checkWinrateText', 'Checks your GVG Stats for the season.');
       set('noBuildCommand', `ccnobuild`);
       set('noBuildCommandText', `Gets the list of requested comps that we didn't have a build for.`);
-      set('ccGearCheck', 'Check the stats on your gear.')
-      set('ccGC', 'ccgc')
+      set('ccGearCheck', 'Check the stats on your gear. \n\nExample command:\n!ccGS 2cc, 1, 8, 7cd');
+      set('ccGS', 'ccgs');
 
       //----------USERS-------------
       set('bullied', 'vikChun8600');
@@ -38,7 +38,6 @@ const Constants = (() => {
       ]);
 
       //----------RESPONSES-------------
-      set('aestheticaResponse', 'Please use my comp, my ASIAN QUEEN!!!! Step on me! *coom*');
       set('ccDenialResponse', 'Find a guild member to sharingan, peasant.');
       set('vcroxDenialResponseGif', 'https://cdn.discordapp.com/attachments/963999915627913226/1027797143932645436/854092979358793759.gif');
 

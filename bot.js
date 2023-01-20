@@ -117,11 +117,11 @@ client.on(Events.MessageCreate, async (message) => {
       }
 
       //gear score checker
-      case constants.ccGC: {
+      case constants.ccGS: {
         const vhelp = neededClasses.vhelp;
 
-        if(command == constants.ccGC) {
-          await vhelp.ccGearScore(theRestString);
+        if(command == constants.ccGS) {
+          await vhelp.ccGearScore(theRestString, userTag);
           break;
         }
       }
