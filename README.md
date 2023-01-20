@@ -10,13 +10,13 @@ This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API 
 
 ## Screenshots
 
-Commands:
+#### Commands ####:
 1. User writes "!commands".
 ![image](https://user-images.githubusercontent.com/99042142/213616023-3d634ab9-44f8-4e60-9c7e-fd33583c8ee5.png)
 2. Commands will be returned to user.
 ![image](https://user-images.githubusercontent.com/99042142/213699559-61ef5e6d-ab93-4d2d-bc56-2f7518bbb5bd.png)
 
-Team Composition Check:
+#### Team Composition Check ####
 1. User inputs three names into the discord channel following the prefix "!cc".
 ![image](https://user-images.githubusercontent.com/99042142/213616229-2d110c15-42e6-44a7-9da1-c2a9c7652c84.png)
 2. Inputs will be populated in the google sheet.
@@ -25,7 +25,7 @@ Team Composition Check:
 ![image](https://user-images.githubusercontent.com/99042142/213616816-dcb149ba-81e4-4d9b-b0fb-a3c7e4a985b7.png)
 ![image](https://user-images.githubusercontent.com/99042142/213616767-a18203df-33c6-4df1-99d9-82a83c4b78dd.png)
 
-Gear Score Check:
+#### Gear Score Check ####
 1. User inputs stats of gear.
 2. Data of total gear score with unique multipliers applied will be returned back to user.
 ![image](https://user-images.githubusercontent.com/99042142/213700006-d3a37cd2-4a2b-4cdf-806b-34f9e182e276.png)
