@@ -73,7 +73,6 @@ const Vhelp = (() => {
   
         //Loops through all comp info and adds fields for them
         builds.forEach((element,index) => {
-          console.log('element for builds', element);
           embed.addFields({name: '\u200B', value: '\u200B',},);
   
           let offenseName = `Alternative ${index} Offense`;
@@ -247,11 +246,9 @@ const Vhelp = (() => {
         }, '');
 
         const occurrences = current.at(-1);
-        console.log('occ', occurrences);
 
         return `${finalString}${occurrences} | ${units}\n`
       }, '');
-      console.log('nbd', displayString);
 
       const channelLink = `https://discord.com/channels/${this.#message.guildId}/${this.#message.channelId}`;
 

@@ -27,9 +27,10 @@ const Constants = (() => {
       set('checkWinrateText', 'Checks your GVG Stats for the season.');
       set('noBuildCommand', `ccnobuild`);
       set('noBuildCommandText', `Gets the list of requested comps that we didn't have a build for.`);
+      set('ccGC', 'getGearScore')
 
       //----------USERS-------------
-      set('vikChun', 'vikchun#8600');
+      set('vikChun', '');
       set('aestheticaId', 'Aesthetica#4825');
       set('officerRoles', ['Parabellum Officer'
         //, 'Parabellum2 Officer', 'Parabellum3 Officer'

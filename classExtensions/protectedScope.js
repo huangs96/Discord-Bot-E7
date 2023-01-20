@@ -7,7 +7,7 @@ const sharedScopeAccess = (container) => {
     return function(context) {
         if (!container.has(context)) {
             container.set(context, {});
-        }
+        };
         return container.get(context);
     };
     
