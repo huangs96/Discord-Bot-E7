@@ -16,6 +16,7 @@ const CORRECT_NUM_UNITS = 3;
 const NOT_ENOUGH_UNITS_STRING = "You didn't provide enough units to search.";
 const TOO_MANY_UNITS_STRING = 'You inputed too many units.';
 const GEAR_DATA_INSUFFICIENT = 'Gear data insufficient - cannot calculate gear score.'
+const GEAR_DATA_OVERLIMIT = 'Gear data over limit - cannot calculate gear score.'
 
 
 const Vhelp = (() => {
@@ -276,43 +277,65 @@ const Vhelp = (() => {
     }
 
     async #getGearScore(gearData, userId) {
-      //this function checks if there are repeats of 'c' in command, but will always return true because within GearData, we are receiving 
-      function hasRepeats(str) {
-        return (/([a-z])\1/i).test(str)
-      };
+      // //this function checks if there are repeats of 'c' in command, but will always return true because within GearData, we are receiving
+      // function hasRepeats(str) {
+      //   return (/([a-z])\1/i).test(str)
+      // };
 
-      hasRepeats(gearData);
+      // hasRepeats(gearData);
+
 
       if (gearData) {
-        console.log('gearData', gearData)
         const splitGearData = gearData.split(',');
         // const formula = '(x * 1.6) + y + z + (a4 * 1.14)';
-        const individualGearScores = splitGearData.map(scores => {
-          scores.replace(/\D/g,'');
-          const finalScoreData = parseInt(scores);
-          return finalScoreData;
-        });
-        const score1 = individualGearScores[0] * 1.6;
-        const score2 = individualGearScores[1];
-        const score3 = individualGearScores[2];
-        const score4 = individualGearScores[3] * 1.14;
-        const finalGearScore = score1 + score2 + score3 + score4;
-
-        if (finalGearScore < 65) {
-          this.#sendMessage(`Hey <@${this.#userId}> here is your gear score: ${finalGearScore.toFixed(2)} \nWhy are you rolling blue gear?`);
-        } else if (finalGearScore >= 65 && finalGearScore < 69) {
-          this.#sendMessage(`Hey <@${this.#userId}>, here is your gear score: ${finalGearScore.toFixed(2)} \n Maybe usable in PVE?`);
-        } else if (finalGearScore >= 70 && finalGearScore < 74 ) {
-          this.#sendMessage(`Hey <@${this.#userId}>, here is your gear score: ${finalGearScore.toFixed(2)} \nGimme more of this!`);
+        if (splitGearData.length === 4) {
+          const individualGearScores = splitGearData.map(scores => {
+            console.log('scores', scores);
+            const speed = scores.includes('sp');
+            const crit = scores.includes('cc');
+            const cd = scores.includes('cd');
+            const getScoreInt = (/\D/g,'');
+  
+            if (speed) {
+              scores.replace(getScoreInt);
+              const finalSpeedScore = parseInt(scores) * 2;
+              return finalSpeedScore;
+            } else if (crit) {
+              scores.replace(getScoreInt);
+              const finalCritScore = parseInt(scores) * 1.6;
+              return finalCritScore;
+            } else if (cd) {
+              scores.replace(getScoreInt);
+              const finalCdScore = parseInt(scores) * 1.14;
+              return finalCdScore;
+            } else {
+              scores.replace(getScoreInt);
+              const finalScore = parseInt(scores);
+              return finalScore;
+            };
+          });
+          const finalGearScore = individualGearScores.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    
+            if (finalGearScore < 65) {
+              this.#sendMessage(`Hey <@${this.#userId}> here is your gear score: ${finalGearScore.toFixed(2)} \nWhy are you rolling blue gear?`);
+            } else if (finalGearScore >= 65 && finalGearScore < 69) {
+              this.#sendMessage(`Hey <@${this.#userId}>, here is your gear score: ${finalGearScore.toFixed(2)} \n Maybe usable in PVE?`);
+            } else if (finalGearScore >= 70 && finalGearScore < 74 ) {
+              this.#sendMessage(`Hey <@${this.#userId}>, here is your gear score: ${finalGearScore.toFixed(2)} \nGimme more of this!`);
+            } else {
+              this.#sendMessage(`Hey <@${this.#userId}>, here is your gear score: ${finalGearScore.toFixed(2)} \nCan I have your number?`);
+            };
+            return;
+        } else if (splitGearData.length > 4) {
+          this.#messageGearOverlimit();
         } else {
-          this.#sendMessage(`Hey <@${this.#userId}>, here is your gear score: ${finalGearScore.toFixed(2)} \nCan I have your number?`);
-        }
-
+          this.#messageGearInsufficient();
+        };
       } else {
         this.#messageGearInsufficient();
         return;
-      }
-    }
+      };
+    };
   
     #getCommands() {
       return [
@@ -345,8 +368,11 @@ const Vhelp = (() => {
       this.#sendMessage(TOO_MANY_UNITS_STRING);
     }
 
+    #messageGearOverlimit() {
+      this.#sendMessage(GEAR_DATA_OVERLIMIT);
+    }
+
     #messageGearInsufficient() {
-      console.log(GEAR_DATA_INSUFFICIENT);
       this.#sendMessage(GEAR_DATA_INSUFFICIENT);
     }
   
