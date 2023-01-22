@@ -283,9 +283,9 @@ const Vhelp = (() => {
 
       hasRepeats(gearData);
 
-      if (gearData.includes('cc' && 'cd')) {
+      if (gearData) {
+        console.log('gearData', gearData)
         const splitGearData = gearData.split(',');
-        console.log(/(.).*\1/.test(gearData));
         // const formula = '(x * 1.6) + y + z + (a4 * 1.14)';
         const individualGearScores = splitGearData.map(scores => {
           scores.replace(/\D/g,'');
