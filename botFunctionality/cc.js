@@ -290,10 +290,12 @@ const Vhelp = (() => {
         // const formula = '(x * 1.6) + y + z + (a4 * 1.14)';
         if (splitGearData.length === 4) {
           const individualGearScores = splitGearData.map(scores => {
-            console.log('scores', scores);
-            const speed = scores.includes('sp');
+            const speed = scores.includes('spd');
             const crit = scores.includes('cc');
             const cd = scores.includes('cd');
+            const fhp = scores.includes('fhp');
+            const fdef = scores.includes('fdef');
+            const fatk = scores.includes('fatk');
             const getScoreInt = (/\D/g,'');
   
             if (speed) {
@@ -308,6 +310,18 @@ const Vhelp = (() => {
               scores.replace(getScoreInt);
               const finalCdScore = parseInt(scores) * 1.14;
               return finalCdScore;
+            } else if (fhp) {
+              scores.replace(getScoreInt);
+              const finalHpScore = parseInt(scores) / 56.11;
+              return finalHpScore;
+            } else if (fdef) {
+              scores.replace(getScoreInt);
+              const finalfDefScore = parseInt(scores) / 6.03;
+              return finalfDefScore;
+            } else if (fatk) {
+              scores.replace(getScoreInt);
+              const finalfAtkScore = parseInt(scores) / 12.72;
+              return finalfAtkScore;
             } else {
               scores.replace(getScoreInt);
               const finalScore = parseInt(scores);
