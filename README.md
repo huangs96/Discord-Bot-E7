@@ -28,7 +28,7 @@ This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API 
 #### Gear Score Check ####
 1. User inputs stats of gear with abbreviation for specific traits.
 2. Data of total gear score with unique multipliers applied will be returned back to user.
-![image](https://user-images.githubusercontent.com/99042142/213700006-d3a37cd2-4a2b-4cdf-806b-34f9e182e276.png)
+![image](https://user-images.githubusercontent.com/99042142/214002935-7db3be17-9e18-4090-b021-d55cb738985c.png)
 
 
 ## Dependencies
