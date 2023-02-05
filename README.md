@@ -32,9 +32,11 @@ This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API 
 
 #### Non-Response Report ####
 1. Team compositions that have not been added to the Google Sheets will be added to the non-response report.
-2. Once the team composition has been added, the sheet will automatically move the non-response team composition to the 'finished comp' section.
-
+2. Each time a team composition is added to the list, the occurances column will +1.
+3. Once the team composition has been added, the sheet will automatically move the non-response team composition to the 'finished comp' section.
 ![image](https://user-images.githubusercontent.com/99042142/216804462-b8771975-2e7c-4e76-8a6d-c57d8f7b3ef7.png)
+![image](https://user-images.githubusercontent.com/99042142/216804542-18e44abf-1830-4b2c-86c4-c06c61bb10cb.png)
+
 
 
 ## Dependencies
