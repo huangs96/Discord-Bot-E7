@@ -30,6 +30,8 @@ This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API 
 2. Data of total gear score with unique multipliers applied will be returned back to user.
 ![image](https://user-images.githubusercontent.com/99042142/214002935-7db3be17-9e18-4090-b021-d55cb738985c.png)
 
+#### Non-Response Report ####
+1. All user inputs for team compositions that do not exist in the Google Sheet will populate a non-response report.
 
 ## Dependencies
 - NodeJS
