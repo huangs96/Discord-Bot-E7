@@ -31,7 +31,11 @@ This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API 
 ![image](https://user-images.githubusercontent.com/99042142/214002935-7db3be17-9e18-4090-b021-d55cb738985c.png)
 
 #### Non-Response Report ####
-1. All user inputs for team compositions that do not exist in the Google Sheet will populate a non-response report.
+1. Team compositions that have not been added to the Google Sheets will be added to the non-response report.
+2. Once the team composition has been added, the sheet will automatically move the non-response team composition to the 'finished comp' section.
+
+![image](https://user-images.githubusercontent.com/99042142/216804462-b8771975-2e7c-4e76-8a6d-c57d8f7b3ef7.png)
+
 
 ## Dependencies
 - NodeJS
