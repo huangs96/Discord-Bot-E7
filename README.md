@@ -24,6 +24,9 @@ This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API 
 4. Data populated from Google Sheets will be put into an embed and sent to discord through discord API.
 ![image](https://user-images.githubusercontent.com/99042142/213616816-dcb149ba-81e4-4d9b-b0fb-a3c7e4a985b7.png)
 ![image](https://user-images.githubusercontent.com/99042142/213616767-a18203df-33c6-4df1-99d9-82a83c4b78dd.png)
+5. More examples:
+![image](https://user-images.githubusercontent.com/99042142/217400904-802e0075-3838-4b80-bab4-71c2d2755bb0.png)
+
 
 #### Gear Score Check ####
 1. User inputs stats of gear with abbreviation for specific traits.
