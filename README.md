@@ -28,7 +28,7 @@ This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API 
 #### Gear Score Check ####
 1. User inputs stats of gear with abbreviation for specific traits.
 2. Data of total gear score with unique multipliers applied will be returned back to user.
-![image](https://user-images.githubusercontent.com/99042142/214002935-7db3be17-9e18-4090-b021-d55cb738985c.png)
+![image](https://user-images.githubusercontent.com/99042142/217400749-cf2ba461-04d5-40f6-be37-05970aa90dc1.png)
 
 #### Non-Response Report ####
 1. Team compositions that have not been added to the Google Sheets will be added to the non-response report.
