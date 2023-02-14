@@ -1,5 +1,5 @@
 # Discord-Bot-E7
-This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API to help Epic 7 mobile game players improve their guild war match ups, provide player gear score and winrates, and record team compositions that have no yet been created. The bot functions by connecting their discord server with an in-depth Google Sheet created by one of the players.
+This Discord Bot was created using NodeJS, Google Sheets API, and DiscordJS API to help Epic 7 mobile game players improve their guild war match ups, provide player gear score and winrates, and record team compositions that have not yet been created. The bot functions by connecting their discord server with an in-depth Google Sheet created by one of the players.
 
 This discord bot is currently used by the 120 members of the #1 ranked guild in Epic 7.
 
